@@ -1,0 +1,412 @@
+import { IPosition } from '../../../'
+
+export const generateLinkPath = (startPos: IPosition, endPos: IPosition): string => {
+  console.log("start point: ", startPos)
+  console.log("end point: ", endPos)
+  if (!endPos.portType) {
+    return curvePath(startPos, endPos)
+  } else {
+    return foldPath(startPos, endPos)
+  }
+}
+
+
+function curvePath(startPos: IPosition, endPos: IPosition): string {
+  const width = Math.abs(startPos.x - endPos.x)
+  const height = Math.abs(startPos.y - endPos.y)
+  const leftToRight = startPos.x < endPos.x
+  const topToBottom = startPos.y < endPos.y
+  const isHorizontal = width > height
+
+  let start
+  let end
+  if (isHorizontal) {
+    start = leftToRight ? startPos : endPos
+    end = leftToRight ? endPos : startPos
+  } else {
+    start = topToBottom ? startPos : endPos
+    end = topToBottom ? endPos : startPos
+  }
+
+  const curve = isHorizontal ? width / 3 : height / 3
+  const curveX = isHorizontal ? curve : 0
+  const curveY = isHorizontal ? 0 : curve
+
+  return `M${start.x},${start.y} C ${start.x + curveX},${start.y + curveY} ${end.x - curveX},${end.y - curveY} ${end.x},${end.y}`
+}
+
+function foldPath(startPos: IPosition, endPos: IPosition): string {
+  let linkPath = ""
+
+  
+  if (startPos.portType === "top" && endPos.portType === "top") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x} ${startPos.y - 30}
+    `
+    if (startPos.x > endPos.x && startPos.y > endPos.y) {
+      linkPath += `L ${startPos.x} ${endPos.y - 30}`
+    }
+    if (startPos.x > endPos.x && startPos.y < endPos.y) {
+      linkPath += `L ${endPos.x} ${startPos.y - 30}`
+    }
+    if (startPos.x < endPos.x && startPos.y > endPos.y) {
+      linkPath += `L ${startPos.x} ${endPos.y - 30}`
+    }
+    if (startPos.x < endPos.x && startPos.y < endPos.y) {
+      linkPath += `L ${endPos.x} ${startPos.y - 30}`
+    }
+
+    linkPath += `
+      L ${endPos.x} ${endPos.y - 30}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "top" && endPos.portType === "right") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x} ${startPos.y - 30}
+    `
+    if (startPos.x >= endPos.x + 30 && startPos.y >= endPos.y + 30) {
+      linkPath += `L ${startPos.x} ${endPos.y}`
+    }
+    if (startPos.x >= endPos.x && startPos.y < endPos.y + 30) {
+      linkPath += `L ${endPos.x + 30} ${startPos.y - 30}`
+    }
+    if (startPos.x < endPos.x + 30 && startPos.y >= endPos.y) {
+      linkPath += `L ${endPos.x + 30} ${startPos.y - 30}`
+    }
+    if (startPos.x < endPos.x && startPos.y < endPos.y) {
+      linkPath += `L ${endPos.x + 30} ${startPos.y - 30}`
+    }
+
+    linkPath += `
+      L ${endPos.x + 30} ${endPos.y}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "top" && endPos.portType === "bottom") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x} ${startPos.y - 30}
+    `
+    if (startPos.x >= endPos.x && startPos.y >= endPos.y + 60) {
+      linkPath += `L ${startPos.x} ${endPos.y + 30}`
+    }
+    if (startPos.x >= endPos.x && startPos.y < endPos.y + 60) {
+      linkPath += `
+        L ${startPos.x - startPos.nodeWidth} ${startPos.y - 30}
+        L ${startPos.x - startPos.nodeWidth} ${endPos.y + 30}
+      `
+    }
+    if (startPos.x < endPos.x && startPos.y >= endPos.y + 60) {
+      linkPath += `L ${endPos.x} ${startPos.y - 30}`
+    }
+    if (startPos.x < endPos.x && startPos.y <= endPos.y + 60) {
+      linkPath += `
+        L ${startPos.x + startPos.nodeWidth} ${startPos.y - 30}
+        L ${startPos.x + startPos.nodeWidth} ${endPos.y + 30}
+      `
+    }
+
+    
+
+    linkPath += `
+      L ${endPos.x} ${endPos.y + 30}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "top" && endPos.portType === "left") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x} ${startPos.y - 30}
+    `
+    if (startPos.x >= endPos.x - 30 && startPos.y >= endPos.y) {
+      linkPath += `L ${endPos.x - 30} ${startPos.y - 30}`
+    }
+    if (startPos.x >= endPos.x && startPos.y < endPos.y) {
+      linkPath += `L ${endPos.x - 30} ${startPos.y - 30}`
+    }
+    if (startPos.x < endPos.x - 30 && startPos.y >= endPos.y + 30) {
+      linkPath += `L ${startPos.x} ${endPos.y}`
+    }
+    if (startPos.x < endPos.x && startPos.y < endPos.y + 30) {
+      linkPath += `L ${endPos.x - 30} ${startPos.y - 30}`
+    }
+
+    linkPath += `
+      L ${endPos.x - 30} ${endPos.y}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "right" && endPos.portType === "top") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x + 30} ${startPos.y}
+    `
+    if (startPos.x >= endPos.x && startPos.y > endPos.y) {
+      linkPath += `L ${startPos.x + 30} ${endPos.y - 30}`
+    }
+    if (startPos.x >= endPos.x - 30 && startPos.y < endPos.y) {
+      linkPath += `L ${startPos.x + 30} ${endPos.y - 30}`
+    }
+    if (startPos.x < endPos.x && startPos.y >= endPos.y - 30) {
+      linkPath += `L ${startPos.x + 30} ${endPos.y - 30}`
+    }
+    if (startPos.x < endPos.x - 30 && startPos.y < endPos.y - 30) {
+      linkPath += `L ${endPos.x} ${startPos.y}`
+    }
+
+    linkPath += `
+      L ${endPos.x} ${endPos.y - 30}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "right" && endPos.portType === "right") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x > endPos.x ? startPos.x + 30 : endPos.x + 30} ${startPos.y}
+      L ${startPos.x > endPos.x ? startPos.x + 30 : endPos.x + 30} ${endPos.y}
+      L ${startPos.x > endPos.x ? startPos.x + 30 : endPos.x + 30} ${endPos.y}
+      L ${endPos.x} ${endPos.y}
+      `
+    return linkPath
+  }
+
+  if (startPos.portType === "right" && endPos.portType === "bottom") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x + 30} ${startPos.y}
+      L ${startPos.x + 30} ${endPos.y + 30}
+      L ${endPos.x} ${endPos.y + 30}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "right" && endPos.portType === "left") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x + 30} ${startPos.y}
+    `
+    if (startPos.x >= endPos.x - 60 && startPos.y > endPos.y) {
+      linkPath += `
+        L ${startPos.x + 30} ${startPos.y - startPos.nodeHeight}        
+        L ${endPos.x - 30} ${startPos.y - startPos.nodeHeight}        
+      `
+    }
+    if (startPos.x >= endPos.x - 60 && startPos.y < endPos.y) {
+      linkPath += `
+        L ${startPos.x + 30} ${startPos.y + startPos.nodeHeight}        
+        L ${endPos.x - 30} ${startPos.y + startPos.nodeHeight}        
+      `
+    }
+    if (startPos.x < endPos.x - 60 && startPos.y >= endPos.y - 30) {
+      linkPath += `L ${startPos.x + 30} ${endPos.y}`
+    }
+    if (startPos.x < endPos.x - 60 && startPos.y < endPos.y - 30) {
+      linkPath += `L ${startPos.x + 30} ${endPos.y}`
+    }
+
+    linkPath += `
+      L ${endPos.x - 30} ${endPos.y}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "bottom" && endPos.portType === "top") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x} ${startPos.y + 30}
+    `
+    if (startPos.x >= endPos.x - 60 && startPos.y >= endPos.y -60) {
+      linkPath += `
+        L ${startPos.x - startPos.nodeWidth} ${startPos.y + 30}
+        L ${startPos.x - startPos.nodeWidth} ${endPos.y - 30}
+      `
+    }
+    if (startPos.x >= endPos.x && startPos.y < endPos.y - 60) {
+      linkPath += `L ${startPos.x} ${endPos.y - 30}`
+    }
+    if (startPos.x < endPos.x - 60 && startPos.y >= endPos.y - 60) {
+      linkPath += `
+        L ${startPos.x + startPos.nodeWidth} ${startPos.y + 30}
+        L ${startPos.x + startPos.nodeWidth} ${endPos.y - 30}
+      `
+    }
+    if (startPos.x < endPos.x && startPos.y < endPos.y - 60) {
+      linkPath += `L ${startPos.x} ${endPos.y - 30}`
+    }
+
+    linkPath += `
+      L ${endPos.x} ${endPos.y - 30}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "bottom" && endPos.portType === "right") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x} ${startPos.y + 30}
+      L ${endPos.x + 30} ${startPos.y + 30}
+      L ${endPos.x + 30} ${endPos.y}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "bottom" && endPos.portType === "bottom") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x} ${startPos.y + 30}
+    `
+    if (startPos.x >= endPos.x - 60 && startPos.y >= endPos.y) {
+      linkPath += `L ${endPos.x} ${startPos.y + 30}`
+    }
+    if (startPos.x >= endPos.x && startPos.y < endPos.y) {
+      linkPath += `L ${startPos.x} ${endPos.y + 30}`
+    }
+    if (startPos.x < endPos.x - 60 && startPos.y >= endPos.y) {
+      linkPath += `L ${endPos.x} ${startPos.y + 30}`
+    }
+    if (startPos.x < endPos.x && startPos.y < endPos.y) {
+      linkPath += `L ${startPos.x} ${endPos.y + 30}`
+    }
+
+    linkPath += `
+      L ${endPos.x} ${endPos.y + 30}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "bottom" && endPos.portType === "left") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x} ${startPos.y + 30}
+      L ${endPos.x - 30} ${startPos.y + 30}
+      L ${endPos.x - 30} ${endPos.y}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "left" && endPos.portType === "top") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x - 30} ${startPos.y}
+    `
+    if (startPos.x >= endPos.x - 60 && startPos.y >= endPos.y - 30) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y - 30}`
+    }
+    if (startPos.x >= endPos.x + 30 && startPos.y < endPos.y - 30) {
+      linkPath += `L ${endPos.x} ${startPos.y}`
+    }
+    if (startPos.x < endPos.x - 60 && startPos.y >= endPos.y) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y - 30}`
+    }
+    if (startPos.x < endPos.x + 30 && startPos.y < endPos.y) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y - 30}`
+    }
+
+    linkPath += `
+      L ${endPos.x} ${endPos.y - 30}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "left" && endPos.portType === "right") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x - 30} ${startPos.y}
+    `
+    if (startPos.x >= endPos.x + 60 && startPos.y >= endPos.y) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y}`
+    }
+    if (startPos.x >= endPos.x + 60 && startPos.y < endPos.y) {
+      linkPath += `L ${endPos.x + 30} ${startPos.y}`
+    }
+    if (startPos.x < endPos.x + 60 && startPos.y >= endPos.y) {
+      linkPath += `
+        L ${startPos.x - 30} ${startPos.y - startPos.nodeHeight}
+        L ${endPos.x + 30} ${startPos.y - startPos.nodeHeight}
+      `
+    }
+    if (startPos.x < endPos.x + 60 && startPos.y < endPos.y) {
+      linkPath += `
+        L ${startPos.x - 30} ${startPos.y + startPos.nodeHeight}
+        L ${endPos.x + 30} ${startPos.y + startPos.nodeHeight}
+      `
+    }
+
+    linkPath += `
+      L ${endPos.x + 30} ${endPos.y}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+  
+  if (startPos.portType === "left" && endPos.portType === "bottom") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x - 30} ${startPos.y}
+    `
+    if (startPos.x >= endPos.x + 30 && startPos.y >= endPos.y + 30) {
+      linkPath += `L ${endPos.x} ${startPos.y}`
+    }
+    if (startPos.x >= endPos.x && startPos.y < endPos.y + 30) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y + 30}`
+    }
+    if (startPos.x < endPos.x + 30 && startPos.y >= endPos.y) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y + 30}`
+    }
+    if (startPos.x < endPos.x && startPos.y < endPos.y) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y + 30}`
+    }
+
+    linkPath += `
+      L ${endPos.x} ${endPos.y + 30}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+  if (startPos.portType === "left" && endPos.portType === "left") {
+    linkPath += `
+      M ${startPos.x} ${startPos.y}
+      L ${startPos.x - 30} ${startPos.y}
+    `
+    if (startPos.x >= endPos.x && startPos.y >= endPos.y + 30) {
+      linkPath += `L ${endPos.x - 30} ${startPos.y}`
+    }
+    if (startPos.x >= endPos.x && startPos.y < endPos.y + 30) {
+      linkPath += `L ${endPos.x - 30} ${startPos.y}`
+    }
+    if (startPos.x < endPos.x && startPos.y >= endPos.y) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y}`
+    }
+    if (startPos.x < endPos.x && startPos.y < endPos.y) {
+      linkPath += `L ${startPos.x - 30} ${endPos.y}`
+    }
+
+    linkPath += `
+      L ${endPos.x - 30} ${endPos.y}
+      L ${endPos.x} ${endPos.y}
+    `
+    return linkPath
+  }
+
+}

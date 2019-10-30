@@ -1,0 +1,47 @@
+{
+  "name": "react-ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --mode production",
+    "dev": "webpack-dev-server --config webpack.config.js --mode development --open"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-typescript": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/react": "^16.9.9",
+    "@types/react-dom": "^16.9.2",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-import": "^1.12.2",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "style-loader": "^1.0.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
+  },
+  "dependencies": {
+    "@emotion/core": "^10.0.21",
+    "@emotion/styled": "^10.0.17",
+    "@mrblenny/react-flow-chart": "^0.0.8",
+    "@projectstorm/react-diagrams": "^6.0.1-beta.5",
+    "closest": "^0.0.1",
+    "dagre": "^0.8.4",
+    "lodash": "^4.17.15",
+    "mathjs": "^6.2.3",
+    "pathfinding": "^0.4.18",
+    "paths-js": "^0.4.10",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "redux": "^4.0.4"
+  }
+}
