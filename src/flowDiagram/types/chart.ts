@@ -21,6 +21,8 @@ export interface IChart {
   linkLabel: string
   newNodeId: string
   newLinkId: string
+  clickNodeId: string
+  modelOption: string
   preNodes: any,
   preLinks: any
 }

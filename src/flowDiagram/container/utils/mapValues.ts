@@ -8,5 +8,6 @@ export default function mapValues<
       res[key] = func(o[key])
     }
   }
+  console.log("----res---- ", res)
   return res
 }

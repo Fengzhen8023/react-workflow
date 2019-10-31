@@ -3,7 +3,7 @@ import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, ILink,
   ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas,
   IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
-  IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps,
+  IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeDoubleClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps,
   IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
 
@@ -22,6 +22,7 @@ export interface IFlowChartCallbacks {
   onCanvasClick: IOnCanvasClick
   onDeleteKey: IOnDeleteKey
   onNodeClick: IOnNodeClick
+  onNodeDoubleClick: IOnNodeDoubleClick
   onNodeSizeChange: IOnNodeSizeChange
 }
 
@@ -77,6 +78,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       onCanvasClick,
       onDeleteKey,
       onNodeClick,
+      onNodeDoubleClick,
       onNodeSizeChange,
     },
     Components: {
@@ -91,10 +93,9 @@ export const FlowChart = (props: IFlowChartProps) => {
     config = {},
   } = props
   const { links, nodes, selected, hovered, offset } = chart
-
   const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
-  const nodeCallbacks = { onDragNode, onNodeClick, onNodeSizeChange }
+  const nodeCallbacks = { onDragNode, onNodeClick, onNodeSizeChange, onNodeDoubleClick }
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
 
   const nodesInView = Object.keys(nodes).filter((nodeId) => {

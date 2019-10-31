@@ -27,11 +27,6 @@ export const LinkDefault = ({
 }: ILinkDefaultProps) => {
   const points = generateLinkPath(startPos, endPos)
   const arrow = generateArrowPath(startPos, endPos)
-  
-  link.properties = {}
-  link.properties.label = "link default"
-
-  console.log("----link: ", link)
 
   console.log("arrow: ", arrow)
 

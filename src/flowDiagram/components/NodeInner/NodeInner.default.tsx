@@ -8,13 +8,14 @@ export interface INodeInnerDefaultProps {
 }
 
 const Outer = styled.div`
-  padding: 40px 30px;
+  padding: 30px;
 `
 
 export const NodeInnerDefault = ({ node }: INodeInnerDefaultProps) => {
   return (
     <Outer>
-      <div>Type: {node.type}</div>
+      <p> {(!!node.properties && !!node.properties.name) && `${node.properties.name}`} </p>
+      <p> {(!!node.properties && !!node.properties.description) && `${node.properties.description}`} </p>
     </Outer>
   )
 }

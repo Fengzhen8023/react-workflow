@@ -1,16 +1,14 @@
 import * as React from 'react'
 import { FlowChart, IChart, IConfig, IFlowChartComponents, INodeInnerDefaultProps } from './'
-import * as actions from './container/actions'
+import { 
+  onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
+  onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
+  onCanvasClick, onDeleteKey, onNodeClick, onNodeDoubleClick, 
+  onNodeSizeChange, onPortPositionChange, onCanvasDrop 
+} from './container/actions'
 import styled from 'styled-components'
 import mapValues from './container/utils/mapValues'
-
-import Store from '../redux/Store'
-
-console.log("Store: ", Store.getState())
-
-const Outer = styled.div`
-  padding: 30px;
-`
+import { IOnNodeDoubleClick } from './'
 
 const ModelBox = styled.div`
   width: 100vw;
@@ -70,7 +68,6 @@ const InputBox = styled.div`
   justify-content: center;
   margin: 20px 0;
   
-
   & label {
     width: 20%;
   }
@@ -93,21 +90,19 @@ export interface IFlowChartWithStateProps {
  */
 class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
   public state: IChart
-  private stateActions = mapValues(actions, (func: any) =>
+  private stateActions = mapValues({
+    onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
+    onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
+    onCanvasClick, onDeleteKey, onNodeClick, onNodeDoubleClick, 
+    onNodeSizeChange, onPortPositionChange, onCanvasDrop
+  }, (func: any) =>
       (...args: any) => this.setState(func(...args)))
-
-  private NodeInnerCustom({ node, config }: INodeInnerDefaultProps) {
-    return (
-      <Outer>
-        <p> { (!!node.properties && !!node.properties.name ) && `${node.properties.name}` } </p>
-        <p> { (!!node.properties && !!node.properties.description ) && `${node.properties.description}` } </p>
-      </Outer>
-    )
-  }
 
   hideModel = () => {
     this.setState({
-      isModelShow: false
+      isModelShow: false,
+      nodeName: "",
+      nodeDescription: ""
     });
   }
 
@@ -131,12 +126,11 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
 
   setNodeInfo = () => {
     let _nodes = this.state.nodes;
-    
-    _nodes[this.state.newNodeId].properties = {
+    let _nodeId = this.state.modelOption === "addNode" ? this.state.newNodeId : this.state.clickNodeId
+    _nodes[_nodeId].properties = {
       name: this.state.nodeName,
       description: this.state.nodeDescription
     }
-
     this.setState({
       nodes: _nodes,
       isModelShow: false
@@ -168,7 +162,9 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
       nodeDescription: "",
       linkLabel: "",
       newNodeId: "",
-      newLinkId: ""
+      newLinkId: "",
+      clickNodeId: "",
+      modelOption: "addNode"
     }
   }
 
@@ -221,7 +217,7 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
         delete node.position.node
       }
     }
-    // console.log("flow data: ", JSON.stringify(flowData))
+    console.log("flow data: ", JSON.stringify(flowData))
 
 
     // when user add new link, he shold add the label of this link
@@ -233,13 +229,9 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
     }
 
     if(addedLinkNumber > this.state.preLinks.length) {
-      console.log("Add new Link")
-
       let _preLinks = this.state.preLinks
       let _currentLinks = Object.keys(this.state.links)
       let _newLink = _currentLinks.filter(link => !_preLinks.includes(link))
-
-      console.log("----newLink---- ", _newLink)
 
       this.setState({
         isModelShow: true,
@@ -263,7 +255,10 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
       this.setState({
         isModelShow: true,
         showModelName: "newNodeModel",
-        newNodeId: newNode[0]
+        modelOption: "addNode",
+        newNodeId: newNode[0],
+        nodeName: "",
+        nodeDescription: ""
       });
 
 
@@ -275,15 +270,42 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
     }
   }
 
+  onNodeDoubleClick: IOnNodeDoubleClick = ({ nodeId }) => (chart: IChart) => {
+    let clickNodeProperties = this.state.nodes[nodeId].properties
+    clickNodeProperties = !!clickNodeProperties ? clickNodeProperties : {}
+
+    this.setState({
+      isModelShow: true,
+      modelOption: "editNode",
+      showModelName: "newNodeModel",
+      clickNodeId: nodeId,
+      nodeName: clickNodeProperties.name,
+      nodeDescription: clickNodeProperties.description
+    })
+    return chart
+  }
+  
+  componentWillMount() {
+    let _actions = {
+      onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
+      onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
+      onCanvasClick, onDeleteKey, onNodeClick, 
+      onNodeSizeChange, onPortPositionChange, onCanvasDrop,
+      onNodeDoubleClick: this.onNodeDoubleClick
+    }
+
+    this.stateActions = mapValues(_actions, (func: any) =>
+        (...args: any) => this.setState(func(...args)))
+  }
+
   public render () {
     const { Components, config } = this.props
-    Components.NodeInner = this.NodeInnerCustom
-
     console.log("this state: ", this.state)
 
     return (
       <React.Fragment>
-        { this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : this.renderAddNewLinkModel()}
+        {/* { this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : this.renderAddNewLinkModel()} */}
+        { this.state.showModelName === "newNodeModel" && this.renderAddNewNodeModel() }
         <FlowChart
           chart={this.state}
           callbacks={this.stateActions}

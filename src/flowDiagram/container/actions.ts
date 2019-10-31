@@ -2,7 +2,7 @@ import { v4 } from 'uuid'
 import {
   IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel,
   IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick,
-  IOnNodeSizeChange, IOnPortPositionChange,
+  IOnNodeDoubleClick, IOnNodeSizeChange, IOnPortPositionChange,
 } from '../'
 import { rotate } from './utils/rotate'
 
@@ -136,6 +136,17 @@ export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
       id: nodeId,
     }
   }
+  return chart
+}
+
+export const onNodeDoubleClick: IOnNodeDoubleClick = ({ nodeId }) => (chart: IChart) => {
+  console.log("----actions.ts on node double click----")
+  // if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
+  //   chart.selected = {
+  //     type: 'node',
+  //     id: nodeId,
+  //   }
+  // }
   return chart
 }
 

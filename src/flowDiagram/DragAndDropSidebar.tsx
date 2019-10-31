@@ -219,7 +219,7 @@ const processPoint = {
   },
   port3: {
     id: 'port3',
-    type: 'bootom',
+    type: 'bottom',
   },
   port4: {
     id: 'port4',
