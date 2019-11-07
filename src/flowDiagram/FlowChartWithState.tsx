@@ -3,7 +3,7 @@ import { FlowChart, IChart, IConfig, IFlowChartComponents, INodeInnerDefaultProp
 import { 
   onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
   onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
-  onCanvasClick, onDeleteKey, onNodeClick, onNodeDoubleClick, 
+  onCanvasClick, onDeleteKey, onNodeClick,
   onNodeSizeChange, onPortPositionChange, onCanvasDrop 
 } from './container/actions'
 import styled from 'styled-components'
@@ -89,12 +89,46 @@ export interface IFlowChartWithStateProps {
  * Flow Chart With State
  */
 class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
+  constructor (props: IFlowChartWithStateProps) {
+    super(props)
+    this.state = {
+      ...props.initialValue,
+      preNodes: Object.keys(props.initialValue.nodes),
+      preLinks: Object.keys(props.initialValue.links),
+      isModelShow: false,
+      showModelName: "",
+      nodeName: "",
+      nodeDescription: "",
+      linkLabel: "",
+      newNodeId: "",
+      newLinkId: "",
+      clickNodeId: "",
+      modelOption: "addNode"
+    }
+  }
+
   public state: IChart
+
+  onNodeDoubleClick: IOnNodeDoubleClick = ({ nodeId }) => {
+    let clickNodeProperties = this.state.nodes[nodeId].properties
+    clickNodeProperties = !!clickNodeProperties ? clickNodeProperties : {}
+
+    this.setState({
+      isModelShow: true,
+      modelOption: "editNode",
+      showModelName: "newNodeModel",
+      clickNodeId: nodeId,
+      nodeName: clickNodeProperties.name,
+      nodeDescription: clickNodeProperties.description
+    })
+  }
+
   private stateActions = mapValues({
     onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
     onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
-    onCanvasClick, onDeleteKey, onNodeClick, onNodeDoubleClick, 
-    onNodeSizeChange, onPortPositionChange, onCanvasDrop
+    onCanvasClick, onDeleteKey, onNodeClick,
+    onNodeSizeChange, onPortPositionChange, onCanvasDrop,
+    onNodeDoubleClick: this.onNodeDoubleClick
   }, (func: any) =>
       (...args: any) => this.setState(func(...args)))
 
@@ -148,24 +182,6 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
       links: _links,
       isModelShow: false
     });
-  }
-
-  constructor (props: IFlowChartWithStateProps) {
-    super(props)
-    this.state = {
-      ...props.initialValue,
-      preNodes: Object.keys(props.initialValue.nodes),
-      preLinks: Object.keys(props.initialValue.links),
-      isModelShow: false,
-      showModelName: "",
-      nodeName: "",
-      nodeDescription: "",
-      linkLabel: "",
-      newNodeId: "",
-      newLinkId: "",
-      clickNodeId: "",
-      modelOption: "addNode"
-    }
   }
 
   renderAddNewNodeModel = () => {
@@ -260,42 +276,12 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
         nodeName: "",
         nodeDescription: ""
       });
-
-
     }
     if (Object.keys(this.state.nodes).length != this.state.preNodes.length) {
       this.setState((preState) => ({
         preNodes: Object.keys(preState.nodes)
       }))
     }
-  }
-
-  onNodeDoubleClick: IOnNodeDoubleClick = ({ nodeId }) => (chart: IChart) => {
-    let clickNodeProperties = this.state.nodes[nodeId].properties
-    clickNodeProperties = !!clickNodeProperties ? clickNodeProperties : {}
-
-    this.setState({
-      isModelShow: true,
-      modelOption: "editNode",
-      showModelName: "newNodeModel",
-      clickNodeId: nodeId,
-      nodeName: clickNodeProperties.name,
-      nodeDescription: clickNodeProperties.description
-    })
-    return chart
-  }
-  
-  componentWillMount() {
-    let _actions = {
-      onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
-      onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
-      onCanvasClick, onDeleteKey, onNodeClick, 
-      onNodeSizeChange, onPortPositionChange, onCanvasDrop,
-      onNodeDoubleClick: this.onNodeDoubleClick
-    }
-
-    this.stateActions = mapValues(_actions, (func: any) =>
-        (...args: any) => this.setState(func(...args)))
   }
 
   public render () {
