@@ -233,7 +233,7 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
         delete node.position.node
       }
     }
-    console.log("flow data: ", JSON.stringify(flowData))
+    // console.log("flow data: ", JSON.stringify(flowData))
 
 
     // when user add new link, he shold add the label of this link
@@ -290,8 +290,8 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
 
     return (
       <React.Fragment>
-        {/* { this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : this.renderAddNewLinkModel()} */}
-        { this.state.showModelName === "newNodeModel" && this.renderAddNewNodeModel() }
+        { this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : this.renderAddNewLinkModel()}
+        {/* { this.state.showModelName === "newNodeModel" && this.renderAddNewNodeModel() } */}
         <FlowChart
           chart={this.state}
           callbacks={this.stateActions}

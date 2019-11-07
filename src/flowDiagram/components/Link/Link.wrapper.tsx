@@ -4,11 +4,10 @@ import { noop } from '../../utils'
 import { ILinkDefaultProps, LinkDefault } from './Link.default'
 import { getLinkPosition } from './utils'
 
-import Store from '../../../redux/Store'
-
 export interface ILinkWrapperProps {
   config: IConfig,
   link: ILink
+  linkLabel: string
   isSelected: boolean
   isHovered: boolean
   fromNode: INode
@@ -32,9 +31,6 @@ export const LinkWrapper = React.memo(({
   toNode,
 }: ILinkWrapperProps) => {
   const startPos = getLinkPosition(fromNode, link.from.portId)
-
-  console.log("----toNode---- ", toNode)
-  console.log("----link.to.portId---- ", link.to.portId)
 
   const endPos = toNode && link.to.portId
     ? getLinkPosition(toNode, link.to.portId)

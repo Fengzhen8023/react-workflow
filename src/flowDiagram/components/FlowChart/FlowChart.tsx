@@ -140,6 +140,7 @@ export const FlowChart = (props: IFlowChartProps) => {
             config={config}
             key={linkId}
             link={links[linkId]}
+            linkLabel={links[linkId].properties && links[linkId].properties.label ? links[linkId].properties.label : ""}
             Component={Link}
             isSelected={isSelected}
             isHovered={isHovered}
