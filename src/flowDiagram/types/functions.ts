@@ -49,6 +49,8 @@ export type IOnNodeClick = (input: { config?: IConfig, nodeId: string }) => void
 
 export type IOnNodeDoubleClick = (input: { config?: IConfig, nodeId: string }) => void
 
+export type IOnLabelDoubleClick = (input: { config?: IConfig, linkId: string }) => void
+
 export type IOnNodeSizeChange = (input: { config?: IConfig, nodeId: string, size: ISize }) => void
 
 export type IOnCanvasDrop = (input: { config?: IConfig, data: any, position: IPosition }) => void

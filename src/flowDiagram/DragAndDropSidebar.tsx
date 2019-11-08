@@ -150,12 +150,12 @@ const PortCustom = (props: IPortDefaultProps) => {
 
 const LinkCustom = (props) => {
   console.log("----props---- ", props)
-  const { startPos, endPos } = props
+  const { startPos, endPos, link, onLabelDoubleClick } = props
   const { centerX, centerY } = generateLabelPosition(startPos, endPos)
   return (
     <>
       <LinkDefault {...props} />
-      <Label style={{ left: centerX, top: centerY }}>
+      <Label style={{ left: centerX, top: centerY }} onDoubleClick={ () => { onLabelDoubleClick({linkId: link.id}) } }>
          { props.link.properties && props.link.properties.label && (
            <LabelContent>{props.link.properties && props.link.properties.label}</LabelContent>
          )}

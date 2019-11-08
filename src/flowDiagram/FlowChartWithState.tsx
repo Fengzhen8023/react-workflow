@@ -8,7 +8,7 @@ import {
 } from './container/actions'
 import styled from 'styled-components'
 import mapValues from './container/utils/mapValues'
-import { IOnNodeDoubleClick } from './'
+import { IOnNodeDoubleClick, IOnLabelDoubleClick } from './'
 
 const ModelBox = styled.div`
   width: 100vw;
@@ -101,8 +101,9 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
       nodeDescription: "",
       linkLabel: "",
       newNodeId: "",
-      newLinkId: "",
       clickNodeId: "",
+      newLinkId: "",
+      clickLinkId: "",
       modelOption: "addNode"
     }
   }
@@ -123,12 +124,26 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
     })
   }
 
+  onLabelDoubleClick: IOnLabelDoubleClick = ({linkId}) => {
+    this.setState((preState) => {
+      let preLabel = !!preState.links[linkId].properties && !!preState.links[linkId].properties.label ? preState.links[linkId].properties.label: ""
+      return {
+        isModelShow: true,
+        showModelName: "newLinkModel",
+        linkLabel: preLabel,
+        modelOption: "editLabel",
+        clickLinkId: linkId
+      }
+    })
+  }
+
   private stateActions = mapValues({
     onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
     onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
     onCanvasClick, onDeleteKey, onNodeClick,
     onNodeSizeChange, onPortPositionChange, onCanvasDrop,
-    onNodeDoubleClick: this.onNodeDoubleClick
+    onNodeDoubleClick: this.onNodeDoubleClick,
+    onLabelDoubleClick: this.onLabelDoubleClick
   }, (func: any) =>
       (...args: any) => this.setState(func(...args)))
 
@@ -173,14 +188,20 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
 
   setLinkInfo = () => {
     let _links = this.state.links;
-    
-    _links[this.state.newLinkId].properties = {
-      label: this.state.linkLabel
+    if (this.state.modelOption === "editLabel") {
+      _links[this.state.clickLinkId].properties = {
+        label: this.state.linkLabel
+      }
+    } else if (this.state.modelOption === "addLabel") {
+      _links[this.state.newLinkId].properties = {
+        label: this.state.linkLabel
+      }
     }
 
     this.setState({
       links: _links,
-      isModelShow: false
+      isModelShow: false,
+      linkLabel: ""
     });
   }
 
@@ -252,6 +273,7 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
       this.setState({
         isModelShow: true,
         showModelName: "newLinkModel",
+        modelOption: "addLabel",
         newLinkId: _newLink[0]
       });
     }
