@@ -5,6 +5,7 @@ import { IPortDefaultProps } from './components'
 import { Content, Page, Sidebar, SidebarItem } from './layout'
 import { chartSimple } from './exampleChartState'
 import { INodeDefaultProps, LinkDefault  } from './'
+import { generateLabelPosition } from './utils'
 
 const Input = styled.input`
   padding: 10px;
@@ -13,6 +14,7 @@ const Input = styled.input`
 `
 const Label = styled.div`
   position: absolute;
+  width: 120px;
 `
 
 const LabelContent = styled.div`
@@ -148,9 +150,8 @@ const PortCustom = (props: IPortDefaultProps) => {
 
 const LinkCustom = (props) => {
   console.log("----props---- ", props)
-  const { startPos, endPos, onLinkClick, link } = props
-  const centerX = startPos.x + 5
-  const centerY = startPos.y - 30
+  const { startPos, endPos } = props
+  const { centerX, centerY } = generateLabelPosition(startPos, endPos)
   return (
     <>
       <LinkDefault {...props} />
@@ -161,8 +162,6 @@ const LinkCustom = (props) => {
       </Label>
     </>
   )
-
-
 }
 
 function validateLink({ linkId, fromNodeId, fromPortId, toNodeId, toPortId, chart }): boolean {

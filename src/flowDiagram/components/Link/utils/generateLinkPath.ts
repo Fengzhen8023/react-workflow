@@ -155,7 +155,7 @@ function foldPath(startPos: IPosition, endPos: IPosition): string {
     if (startPos.x >= endPos.x && startPos.y > endPos.y) {
       linkPath += `L ${startPos.x + 30} ${endPos.y - 30}`
     }
-    if (startPos.x >= endPos.x - 30 && startPos.y < endPos.y) {
+    if (startPos.x >= endPos.x - 30 && startPos.y <= endPos.y) {
       linkPath += `L ${startPos.x + 30} ${endPos.y - 30}`
     }
     if (startPos.x < endPos.x && startPos.y >= endPos.y - 30) {
@@ -347,8 +347,8 @@ function foldPath(startPos: IPosition, endPos: IPosition): string {
     }
     if (startPos.x < endPos.x + 60 && startPos.y < endPos.y) {
       linkPath += `
-        L ${startPos.x - 30} ${startPos.y + startPos.nodeHeight}
-        L ${endPos.x + 30} ${startPos.y + startPos.nodeHeight}
+        L ${startPos.x - 30} ${startPos.y - startPos.nodeHeight}
+        L ${endPos.x + 30} ${startPos.y - startPos.nodeHeight}
       `
     }
 
