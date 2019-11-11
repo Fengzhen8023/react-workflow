@@ -1,2 +1,0 @@
-export const ADD_LINK_COMPLETED = "ADD_LINK_COMPLETED"
-export const ADD_LINK_ING = "ADD_LINK_ING"
