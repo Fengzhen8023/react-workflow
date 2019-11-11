@@ -1,11 +1,13 @@
 {
   "name": "react-ts",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/components/FlowChartWithState.js",
+  "files": [ "lib" ],
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
-    "dev": "webpack-dev-server --config webpack.config.js --mode development --open"
+    "dev": "webpack-dev-server --config webpack.config.js --mode development --open",
+    "export": "webpack --config webpack.export.js --mode-=production"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
