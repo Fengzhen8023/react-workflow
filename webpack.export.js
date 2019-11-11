@@ -12,6 +12,7 @@ module.exports = {
         path: __dirname + "/lib/components"
     },
 
+    devtool: "source-map",
     resolve: {
         extensions: ['.ts', '.tsx', '.js', 'jsx'],
     },
