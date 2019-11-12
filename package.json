@@ -2,7 +2,7 @@
   "name": "react-work-flow",
   "version": "1.0.0",
   "main": "dist",
-  "files": [ "lib" ],
+  "files": [ "dist" ],
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
