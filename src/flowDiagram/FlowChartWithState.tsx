@@ -88,7 +88,7 @@ export interface IFlowChartWithStateProps {
 /**
  * Flow Chart With State
  */
-class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
+export class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
   constructor (props: IFlowChartWithStateProps) {
     super(props)
     this.state = {
@@ -313,7 +313,6 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
     return (
       <React.Fragment>
         { this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : this.renderAddNewLinkModel()}
-        {/* { this.state.showModelName === "newNodeModel" && this.renderAddNewNodeModel() } */}
         <FlowChart
           chart={this.state}
           callbacks={this.stateActions}
@@ -324,5 +323,3 @@ class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChar
     )
   }
 }
-
-export default FlowChartWithState

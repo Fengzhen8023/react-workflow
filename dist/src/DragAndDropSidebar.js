@@ -142,9 +142,9 @@ var endPoint = {
         type: 'bottom',
     },
 };
-var DragAndDropSidebar = function () { return (React.createElement(layout_1.Page, null,
+exports.DragAndDropSidebar = function () { return (React.createElement(layout_1.Page, null,
     React.createElement(layout_1.Content, null,
-        React.createElement(FlowChartWithState_1.default, { initialValue: exampleChartState_1.chartSimple, Components: {
+        React.createElement(FlowChartWithState_1.FlowChartWithState, { initialValue: exampleChartState_1.chartSimple, Components: {
                 Port: PortCustom,
                 Node: NodeCustom,
                 Link: LinkCustom
@@ -155,6 +155,5 @@ var DragAndDropSidebar = function () { return (React.createElement(layout_1.Page
         React.createElement(layout_1.SidebarItem, { type: "process-queue", ports: processQueuePoint }),
         React.createElement(layout_1.SidebarItem, { type: "process-point", ports: processPoint }),
         React.createElement(layout_1.SidebarItem, { type: "end", ports: endPoint })))); };
-exports.default = DragAndDropSidebar;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9;
 //# sourceMappingURL=DragAndDropSidebar.js.map

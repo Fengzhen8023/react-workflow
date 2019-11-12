@@ -229,6 +229,6 @@ var FlowChartWithState = /** @class */ (function (_super) {
     };
     return FlowChartWithState;
 }(React.Component));
-exports.default = FlowChartWithState;
+exports.FlowChartWithState = FlowChartWithState;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5;
 //# sourceMappingURL=FlowChartWithState.js.map

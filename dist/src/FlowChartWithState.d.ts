@@ -9,7 +9,7 @@ export interface IFlowChartWithStateProps {
 /**
  * Flow Chart With State
  */
-declare class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
+export declare class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
     constructor(props: IFlowChartWithStateProps);
     state: IChart;
     onNodeDoubleClick: IOnNodeDoubleClick;
@@ -26,4 +26,3 @@ declare class FlowChartWithState extends React.Component<IFlowChartWithStateProp
     componentDidUpdate(): void;
     render(): JSX.Element;
 }
-export default FlowChartWithState;

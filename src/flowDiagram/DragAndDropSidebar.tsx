@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import FlowChartWithState from './FlowChartWithState'
+import { FlowChartWithState } from './FlowChartWithState'
 import { IPortDefaultProps } from './components'
 import { Content, Page, Sidebar, SidebarItem } from './layout'
 import { chartSimple } from './exampleChartState'
@@ -245,7 +245,7 @@ const endPoint = {
   },
 }
 
-const DragAndDropSidebar = () => (
+export const DragAndDropSidebar = () => (
   <Page>
     <Content>
       <FlowChartWithState
@@ -269,5 +269,3 @@ const DragAndDropSidebar = () => (
     </Sidebar>
   </Page>
 )
-
-export default DragAndDropSidebar;
