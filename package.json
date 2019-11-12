@@ -1,7 +1,7 @@
 {
   "name": "react-work-flow",
   "version": "1.0.0",
-  "main": "lib/components/FlowChartWithState.js",
+  "main": "dist",
   "files": [ "lib" ],
   "license": "MIT",
   "scripts": {
