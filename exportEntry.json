@@ -1,5 +1,0 @@
-{
-    "FlowChartWithState": "./src/flowDiagram/FlowChartWithState.tsx",
-    "FlowChart": "./src/flowDiagram/components/FlowChart",
-    "NodeWrapper": "./src/flowDiagram/components/Node/Node.wrapper.tsx"
-}
