@@ -41,7 +41,9 @@
     "lodash": "^4.17.15",
     "mathjs": "^6.2.3",
     "pathfinding": "^0.4.18",
-    "paths-js": "^0.4.10",
+    "paths-js": "^0.4.10"
+  },
+  "peerDependencies": {
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
   }
