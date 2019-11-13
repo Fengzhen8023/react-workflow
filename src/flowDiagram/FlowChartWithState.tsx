@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { FlowChart, IChart, IConfig, IFlowChartComponents, INodeInnerDefaultProps } from './'
+import { FlowChart, IChart, IConfig, IFlowChartComponents } from './'
 import { 
   onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
   onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
@@ -155,19 +155,19 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     });
   }
 
-  handleNameInput = (e) => {
+  handleNameInput = (e: any) => {
     this.setState({
       nodeName: e.currentTarget.value
     });
   }
 
-  handleDescriptionInput = (e) => {
+  handleDescriptionInput = (e: any) => {
     this.setState({
       nodeDescription: e.currentTarget.value
     });
   }
 
-  handleLinkDescriptionInput = (e) => {
+  handleLinkDescriptionInput = (e: any) => {
     this.setState({
       linkLabel: e.currentTarget.value
     });

@@ -3,8 +3,8 @@ export interface IPosition {
   y: number
   portType?: string
   node?: any
-  nodeWidth: number
-  nodeHeight: number
+  nodeWidth?: number
+  nodeHeight?: number
 }
 
 export interface ISize {

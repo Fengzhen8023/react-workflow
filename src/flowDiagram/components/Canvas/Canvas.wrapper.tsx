@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Draggable from 'react-draggable'
+import Draggable, { DraggableData } from 'react-draggable'
 import { IConfig, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
 import CanvasContext from './CanvasContext'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
@@ -84,7 +84,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
             axis="both"
             position={position}
             grid={[1, 1]}
-            onDrag={(event, data) => onDragCanvas({ config, event, data })}
+            onDrag={(event: MouseEvent, data: DraggableData) => onDragCanvas({ config, event, data })}
             disabled={config.readonly}
           >
             <ComponentInner
@@ -103,7 +103,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
                 if (data) {
                   onCanvasDrop({ data, position: {
                     x: e.clientX - (position.x + offsetX),
-                    y: e.clientY - (position.y + offsetY),
+                    y: e.clientY - (position.y + offsetY)
                   }})
                 }
               } }

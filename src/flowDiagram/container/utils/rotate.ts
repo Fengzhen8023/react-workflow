@@ -1,4 +1,4 @@
-import { IPosition } from '../../../'
+import { IPosition } from '../../'
 
 // center = rotation center
 // current = current position

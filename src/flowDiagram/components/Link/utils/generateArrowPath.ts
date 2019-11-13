@@ -19,6 +19,8 @@ const generateArrowPath = (startPos: IPosition, endPos: IPosition): string => {
   if (endPos.portType === "left") {
     return `M ${endPos.x} ${endPos.y} L ${endPos.x - 20} ${endPos.y - 10} L ${endPos.x - 20 } ${endPos.y + 10} Z`
   }
+
+  return ""
 }
 
 export default generateArrowPath;

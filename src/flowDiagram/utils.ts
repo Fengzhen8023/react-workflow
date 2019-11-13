@@ -9,6 +9,7 @@ export interface ILabelPosition {
 
 export const generateLabelPosition = (startPos: IPosition, endPos: IPosition): ILabelPosition => {
     let centerX = 0, centerY = 0
+    let startNodeHeight = !!startPos.nodeHeight ? startPos.nodeHeight : 0
 
     if (startPos.portType === "top" && endPos.portType === "top") {
         centerX = (startPos.x + endPos.x) / 2 - 50
@@ -125,25 +126,25 @@ export const generateLabelPosition = (startPos: IPosition, endPos: IPosition): I
             centerX = endPos.x - 160
         }
         if (centerX < startPos.x + 30 && startPos.y <= endPos.y) {
-            centerY = endPos.y - 25 - (startPos.x + 30 - centerX) * (endPos.y - startPos.y - startPos.nodeHeight) / 60 > startPos.y + startPos.nodeHeight - 25 ?
-                endPos.y - 25 - (startPos.x + 30 - centerX) * (endPos.y - startPos.y - startPos.nodeHeight) / 60 :
-                startPos.y + startPos.nodeHeight - 25
+            centerY = endPos.y - 25 - (startPos.x + 30 - centerX) * (endPos.y - startPos.y - startNodeHeight) / 60 > startPos.y + startNodeHeight - 25 ?
+                endPos.y - 25 - (startPos.x + 30 - centerX) * (endPos.y - startPos.y - startNodeHeight) / 60 :
+                startPos.y + startNodeHeight - 25
             centerX = centerX < startPos.x - 30 ? startPos.x - 30 : centerX
             centerY = centerY >= endPos.y - 25 ? endPos.y - 25 : centerY
         }
         if (centerX < startPos.x + 30 && startPos.y > endPos.y) {
-            centerY = endPos.y - 25 + (startPos.x + 30 - centerX) * (startPos.y + startPos.nodeHeight - endPos.y) / 60 < startPos.y - startPos.nodeHeight - 25 ?
-                endPos.y - 25 + (startPos.x + 30 - centerX) * (startPos.y + startPos.nodeHeight - endPos.y) / 60 :
-                startPos.y - startPos.nodeHeight - 25
+            centerY = endPos.y - 25 + (startPos.x + 30 - centerX) * (startPos.y + startNodeHeight - endPos.y) / 60 < startPos.y - startNodeHeight - 25 ?
+                endPos.y - 25 + (startPos.x + 30 - centerX) * (startPos.y + startNodeHeight - endPos.y) / 60 :
+                startPos.y - startNodeHeight - 25
 
             centerX = centerX < startPos.x - 30 ? startPos.x - 30 : centerX
             centerY = centerY <= endPos.y - 25 ? endPos.y - 25 : centerY
         }
         if (startPos.x >= endPos.x - 60 && startPos.y > endPos.y) {
-            centerY = startPos.y - startPos.nodeHeight - 25
+            centerY = startPos.y - startNodeHeight - 25
         }
         if (startPos.x >= endPos.x - 60 && startPos.y < endPos.y) {
-            centerY = startPos.y + startPos.nodeHeight - 25
+            centerY = startPos.y + startNodeHeight - 25
         }
         if (startPos.x + 30 - 120 >= endPos.x - 30 && centerX >= endPos.x - 30) {
             centerX = endPos.x - 30 >= (startPos.x + endPos.x) / 2 ? endPos.x - 30 : (startPos.x + endPos.x) / 2
@@ -196,11 +197,11 @@ export const generateLabelPosition = (startPos: IPosition, endPos: IPosition): I
 
     if (startPos.portType === "left" && endPos.portType === "right") {
         centerX = (startPos.x + endPos.x) / 2 - 50
-        centerY = startPos.y - startPos.nodeHeight - 25
+        centerY = startPos.y - startNodeHeight - 25
 
         if (startPos.x > endPos.x) {
-            centerY = startPos.y - startPos.nodeHeight - 25 + (startPos.x - endPos.x) * 1.5 < startPos.y -25 ?
-                startPos.y - startPos.nodeHeight - 25 + (startPos.x - endPos.x) * 1.5 : 
+            centerY = startPos.y - startNodeHeight - 25 + (startPos.x - endPos.x) * 1.5 < startPos.y -25 ?
+                startPos.y - startNodeHeight - 25 + (startPos.x - endPos.x) * 1.5 : 
                 startPos.y -25
             centerY = centerY > endPos.y - 25 ? endPos.y - 25 : centerY 
         }

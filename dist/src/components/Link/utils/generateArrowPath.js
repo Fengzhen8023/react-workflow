@@ -18,6 +18,7 @@ var generateArrowPath = function (startPos, endPos) {
     if (endPos.portType === "left") {
         return "M " + endPos.x + " " + endPos.y + " L " + (endPos.x - 20) + " " + (endPos.y - 10) + " L " + (endPos.x - 20) + " " + (endPos.y + 10) + " Z";
     }
+    return "";
 };
 exports.default = generateArrowPath;
 //# sourceMappingURL=generateArrowPath.js.map

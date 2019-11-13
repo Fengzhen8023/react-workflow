@@ -33,6 +33,8 @@ function curvePath(startPos, endPos) {
 }
 function foldPath(startPos, endPos) {
     var linkPath = "";
+    var startNodeWidth = !!startPos.nodeWidth ? startPos.nodeWidth : 0;
+    var startNodeHeight = !!startPos.nodeHeight ? startPos.nodeHeight : 0;
     if (startPos.portType === "top" && endPos.portType === "top") {
         linkPath += "\n      M " + startPos.x + " " + startPos.y + "\n      L " + startPos.x + " " + (startPos.y - 30) + "\n    ";
         if (startPos.x > endPos.x && startPos.y > endPos.y) {
@@ -73,13 +75,13 @@ function foldPath(startPos, endPos) {
             linkPath += "L " + startPos.x + " " + (endPos.y + 30);
         }
         if (startPos.x >= endPos.x && startPos.y < endPos.y + 60) {
-            linkPath += "\n        L " + (startPos.x - startPos.nodeWidth) + " " + (startPos.y - 30) + "\n        L " + (startPos.x - startPos.nodeWidth) + " " + (endPos.y + 30) + "\n      ";
+            linkPath += "\n        L " + (startPos.x - startNodeWidth) + " " + (startPos.y - 30) + "\n        L " + (startPos.x - startNodeWidth) + " " + (endPos.y + 30) + "\n      ";
         }
         if (startPos.x < endPos.x && startPos.y >= endPos.y + 60) {
             linkPath += "L " + endPos.x + " " + (startPos.y - 30);
         }
         if (startPos.x < endPos.x && startPos.y <= endPos.y + 60) {
-            linkPath += "\n        L " + (startPos.x + startPos.nodeWidth) + " " + (startPos.y - 30) + "\n        L " + (startPos.x + startPos.nodeWidth) + " " + (endPos.y + 30) + "\n      ";
+            linkPath += "\n        L " + (startPos.x + startNodeWidth) + " " + (startPos.y - 30) + "\n        L " + (startPos.x + startNodeWidth) + " " + (endPos.y + 30) + "\n      ";
         }
         linkPath += "\n      L " + endPos.x + " " + (endPos.y + 30) + "\n      L " + endPos.x + " " + endPos.y + "\n    ";
         return linkPath;
@@ -129,10 +131,10 @@ function foldPath(startPos, endPos) {
     if (startPos.portType === "right" && endPos.portType === "left") {
         linkPath += "\n      M " + startPos.x + " " + startPos.y + "\n      L " + (startPos.x + 30) + " " + startPos.y + "\n    ";
         if (startPos.x >= endPos.x - 60 && startPos.y > endPos.y) {
-            linkPath += "\n        L " + (startPos.x + 30) + " " + (startPos.y - startPos.nodeHeight) + "        \n        L " + (endPos.x - 30) + " " + (startPos.y - startPos.nodeHeight) + "        \n      ";
+            linkPath += "\n        L " + (startPos.x + 30) + " " + (startPos.y - startNodeHeight) + "        \n        L " + (endPos.x - 30) + " " + (startPos.y - startNodeHeight) + "        \n      ";
         }
         if (startPos.x >= endPos.x - 60 && startPos.y < endPos.y) {
-            linkPath += "\n        L " + (startPos.x + 30) + " " + (startPos.y + startPos.nodeHeight) + "        \n        L " + (endPos.x - 30) + " " + (startPos.y + startPos.nodeHeight) + "        \n      ";
+            linkPath += "\n        L " + (startPos.x + 30) + " " + (startPos.y + startNodeHeight) + "        \n        L " + (endPos.x - 30) + " " + (startPos.y + startNodeHeight) + "        \n      ";
         }
         if (startPos.x < endPos.x - 60 && startPos.y >= endPos.y - 30) {
             linkPath += "L " + (startPos.x + 30) + " " + endPos.y;
@@ -146,13 +148,13 @@ function foldPath(startPos, endPos) {
     if (startPos.portType === "bottom" && endPos.portType === "top") {
         linkPath += "\n      M " + startPos.x + " " + startPos.y + "\n      L " + startPos.x + " " + (startPos.y + 30) + "\n    ";
         if (startPos.x >= endPos.x - 60 && startPos.y >= endPos.y - 60) {
-            linkPath += "\n        L " + (startPos.x - startPos.nodeWidth) + " " + (startPos.y + 30) + "\n        L " + (startPos.x - startPos.nodeWidth) + " " + (endPos.y - 30) + "\n      ";
+            linkPath += "\n        L " + (startPos.x - startNodeWidth) + " " + (startPos.y + 30) + "\n        L " + (startPos.x - startNodeWidth) + " " + (endPos.y - 30) + "\n      ";
         }
         if (startPos.x >= endPos.x && startPos.y < endPos.y - 60) {
             linkPath += "L " + startPos.x + " " + (endPos.y - 30);
         }
         if (startPos.x < endPos.x - 60 && startPos.y >= endPos.y - 60) {
-            linkPath += "\n        L " + (startPos.x + startPos.nodeWidth) + " " + (startPos.y + 30) + "\n        L " + (startPos.x + startPos.nodeWidth) + " " + (endPos.y - 30) + "\n      ";
+            linkPath += "\n        L " + (startPos.x + startNodeWidth) + " " + (startPos.y + 30) + "\n        L " + (startPos.x + startNodeWidth) + " " + (endPos.y - 30) + "\n      ";
         }
         if (startPos.x < endPos.x && startPos.y < endPos.y - 60) {
             linkPath += "L " + startPos.x + " " + (endPos.y - 30);
@@ -211,10 +213,10 @@ function foldPath(startPos, endPos) {
             linkPath += "L " + (endPos.x + 30) + " " + startPos.y;
         }
         if (startPos.x < endPos.x + 60 && startPos.y >= endPos.y) {
-            linkPath += "\n        L " + (startPos.x - 30) + " " + (startPos.y - startPos.nodeHeight) + "\n        L " + (endPos.x + 30) + " " + (startPos.y - startPos.nodeHeight) + "\n      ";
+            linkPath += "\n        L " + (startPos.x - 30) + " " + (startPos.y - startNodeHeight) + "\n        L " + (endPos.x + 30) + " " + (startPos.y - startNodeHeight) + "\n      ";
         }
         if (startPos.x < endPos.x + 60 && startPos.y < endPos.y) {
-            linkPath += "\n        L " + (startPos.x - 30) + " " + (startPos.y - startPos.nodeHeight) + "\n        L " + (endPos.x + 30) + " " + (startPos.y - startPos.nodeHeight) + "\n      ";
+            linkPath += "\n        L " + (startPos.x - 30) + " " + (startPos.y - startNodeHeight) + "\n        L " + (endPos.x + 30) + " " + (startPos.y - startNodeHeight) + "\n      ";
         }
         linkPath += "\n      L " + (endPos.x + 30) + " " + endPos.y + "\n      L " + endPos.x + " " + endPos.y + "\n    ";
         return linkPath;
@@ -253,5 +255,6 @@ function foldPath(startPos, endPos) {
         linkPath += "\n      L " + (endPos.x - 30) + " " + endPos.y + "\n      L " + endPos.x + " " + endPos.y + "\n    ";
         return linkPath;
     }
+    return linkPath;
 }
 //# sourceMappingURL=generateLinkPath.js.map

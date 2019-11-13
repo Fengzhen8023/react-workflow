@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import Draggable from 'react-draggable'
+import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
 import {
   IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
@@ -113,18 +113,18 @@ export const NodeWrapper = ({
       axis="both"
       position={node.position}
       grid={[1,1]}
-      onStart={ (e) => {
+      onStart={ (e: any) => {
         // Stop propagation so the canvas does not move
         e.stopPropagation()
       }}
-      onDrag={(event, data) => onDragNode({ config, event, data, id: node.id })}
+      onDrag={(event: MouseEvent, data: DraggableData) => onDragNode({ config, event, data, id: node.id })}
       disabled={config.readonly}
     >
       <Component
         config={config}
         ref={compRef}
         children={children}
-        onDoubleClick={(e) => {
+        onDoubleClick={(e: any) => {
           onNodeDoubleClick({ config, nodeId: node.id })
           e.stopPropagation()
         }}

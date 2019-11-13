@@ -7,7 +7,6 @@ function mapValues(o, func) {
             res[key] = func(o[key]);
         }
     }
-    console.log("----res---- ", res);
     return res;
 }
 exports.default = mapValues;

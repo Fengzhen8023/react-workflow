@@ -79,7 +79,7 @@ var CanvasWrapper = /** @class */ (function (_super) {
                             if (data) {
                                 onCanvasDrop({ data: data, position: {
                                         x: e.clientX - (position.x + offsetX),
-                                        y: e.clientY - (position.y + offsetY),
+                                        y: e.clientY - (position.y + offsetY)
                                     } });
                             }
                         }, onDragOver: function (e) { return e.preventDefault(); } })))));
