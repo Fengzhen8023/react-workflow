@@ -1,17 +1,21 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { FlowChartWithState } from './FlowChartWithState'
-import { IPortDefaultProps } from './components'
+import { IPortDefaultProps, ILinkDefaultProps } from './components'
 import { Content, Page, Sidebar, SidebarItem } from './layout'
 import { chartSimple } from './exampleChartState'
-import { INodeDefaultProps, LinkDefault  } from './'
+import { INodeDefaultProps, LinkDefault, IChart } from './'
 import { generateLabelPosition } from './utils'
 
-const Input = styled.input`
-  padding: 10px;
-  border: 1px solid cornflowerblue;
-  width: 100%;
-`
+export interface IvalidateLinkParam {
+  linkId: string
+  fromNodeId: string
+  fromPortId: string
+  toNodeId: string
+  toPortId: string
+  chart: IChart
+}
+
 const Label = styled.div`
   position: absolute;
   width: 120px;
@@ -28,12 +32,6 @@ const LabelContent = styled.div`
   font-size: 10px;
   cursor: pointer;
 `
-
-interface Port {
-  id: string,
-  type: string,
-  position?: any
-}
 
 const Message = styled.div`
 margin: 10px;
@@ -54,7 +52,6 @@ const PortDefaultOuter = styled.div`
   &:hover {
     background: cornflowerblue;
   }
-
   & svg {
     width: 15px;
     height: 15px;
@@ -142,13 +139,18 @@ const NodeCustom = React.forwardRef(({ node, children, ...otherProps }: INodeDef
         </ProcessPoint>
       )
   }
+  return (
+    <StartPoint ref={ref} {...otherProps}>
+      {children}
+    </StartPoint>
+  )
 })
 
 const PortCustom = (props: IPortDefaultProps) => {
   return <PortDefaultOuter />
 }
 
-const LinkCustom = (props) => {
+const LinkCustom = (props: ILinkDefaultProps) => {
   console.log("----props---- ", props)
   const { startPos, endPos, link, onLabelDoubleClick } = props
   const { centerX, centerY } = generateLabelPosition(startPos, endPos)
@@ -164,7 +166,15 @@ const LinkCustom = (props) => {
   )
 }
 
-function validateLink({ linkId, fromNodeId, fromPortId, toNodeId, toPortId, chart }): boolean {
+function validateLink({ linkId, fromNodeId, fromPortId, toNodeId, toPortId, chart }: IvalidateLinkParam): boolean {
+
+  console.log("linkId", linkId)
+  console.log("fromNodeId", fromNodeId)
+  console.log("fromPortId", fromPortId)
+  console.log("toNodeId", toNodeId)
+  console.log("toPortId", toPortId)
+  console.log("toPortId", toPortId)
+  console.log("chart", chart)
 
   return true;
 }
@@ -245,7 +255,7 @@ const endPoint = {
   },
 }
 
-export const DragAndDropSidebar = () => (
+const DragAndDropSidebar = () => (
   <Page>
     <Content>
       <FlowChartWithState
@@ -262,10 +272,12 @@ export const DragAndDropSidebar = () => (
       <Message>
         Drag and drop these items onto the canvas.
       </Message>
-      <SidebarItem className="start" type="start" ports={startPoint} />
+      <SidebarItem type="start" ports={startPoint} />
       <SidebarItem type="process-queue" ports={processQueuePoint} />
       <SidebarItem type="process-point"  ports={processPoint} />
       <SidebarItem type="end" ports={ endPoint } />
     </Sidebar>
   </Page>
 )
+
+export default DragAndDropSidebar;

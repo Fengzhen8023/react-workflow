@@ -1,4 +1,4 @@
-import { start } from "repl"
+import { IPosition } from './types/generics'
 
 export const noop = () => null
 
@@ -7,15 +7,7 @@ export interface ILabelPosition {
     centerY: number
 }
 
-export interface INodePos {
-    nodeHeight: number
-    nodeWidth: number
-    portType: string
-    x: number
-    y: number
-}
-
-export const generateLabelPosition = (startPos: INodePos, endPos: INodePos): ILabelPosition => {
+export const generateLabelPosition = (startPos: IPosition, endPos: IPosition): ILabelPosition => {
     let centerX = 0, centerY = 0
 
     if (startPos.portType === "top" && endPos.portType === "top") {

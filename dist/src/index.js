@@ -9,5 +9,4 @@ __export(require("./constants"));
 __export(require("./utils"));
 __export(require("./layout"));
 __export(require("./FlowChartWithState"));
-__export(require("./DragAndDropSidebar"));
 //# sourceMappingURL=index.js.map

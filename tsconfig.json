@@ -24,7 +24,14 @@
 		"types": ["react"]
 	},
 	"include": [
-		"./src"
+		"./src/flowDiagram/components",
+		"./src/flowDiagram/container",
+		"./src/flowDiagram/layout",
+		"./src/flowDiagram/types",
+		"./src/flowDiagram/constants.ts",
+		"./src/flowDiagram/FlowChartWithState.tsx",
+		"./src/flowDiagram/index.ts",
+		"./src/flowDiagram/utils.ts"
 	],
 	"exclude": [
 		"node_modules",
