@@ -7,7 +7,7 @@ exports.LinkDefault = function (_a) {
     var config = _a.config, link = _a.link, startPos = _a.startPos, endPos = _a.endPos, onLinkMouseEnter = _a.onLinkMouseEnter, onLinkMouseLeave = _a.onLinkMouseLeave, onLabelDoubleClick = _a.onLabelDoubleClick, onLinkClick = _a.onLinkClick, isHovered = _a.isHovered, isSelected = _a.isSelected;
     var points = __1.generateLinkPath(startPos, endPos);
     var arrow = generateArrowPath_1.default(startPos, endPos);
-    console.log("arrow: ", arrow);
+    // console.log("arrow: ", arrow)
     return (React.createElement("svg", { style: { overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 } },
         React.createElement("circle", { r: "4", cx: startPos.x, cy: startPos.y, fill: "cornflowerblue" }),
         React.createElement("path", { d: points, stroke: "cornflowerblue", strokeWidth: "3", fill: "none" }),

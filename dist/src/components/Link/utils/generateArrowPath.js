@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var generateArrowPath = function (startPos, endPos) {
-    console.log("----startPos: ", startPos);
-    console.log("----endPos: ", endPos);
+    // console.log("----startPos: ", startPos)
+    // console.log("----endPos: ", endPos)
     if (!endPos.portType) {
         return "";
     }

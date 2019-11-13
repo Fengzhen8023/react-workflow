@@ -53,11 +53,30 @@ const Outer = styled.div`
 
 export interface ISidebarItemProps {
   type: string,
-  ports: INode['ports'],
+  ports?: INode['ports'],
   properties?: any,
 }
 
-export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
+const defaultPorts = {
+  port1: {
+    id: 'port1',
+    type: 'top',
+  },
+  port2: {
+    id: 'port2',
+    type: 'right',
+  },
+  port3: {
+    id: 'port3',
+    type: 'bottom',
+  },
+  port4: {
+    id: 'port4',
+    type: 'left',
+  }
+}
+
+export const SidebarItem = ({ type, ports = defaultPorts, properties }: ISidebarItemProps) => {
   return (
     <Outer
       className={type}

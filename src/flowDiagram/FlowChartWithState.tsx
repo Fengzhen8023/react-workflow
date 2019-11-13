@@ -1,14 +1,13 @@
 import * as React from 'react'
-import { FlowChart, IChart, IConfig, IFlowChartComponents } from './'
+import styled from 'styled-components'
+import mapValues from './container/utils/mapValues'
+import { FlowChart, IChart, IConfig, IFlowChartComponents, IOnNodeDoubleClick, IOnLabelDoubleClick } from './'
 import { 
   onDragNode, onDragCanvas, onLinkStart, onLinkMove, onLinkComplete, 
   onLinkCancel, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, 
   onCanvasClick, onDeleteKey, onNodeClick,
   onNodeSizeChange, onPortPositionChange, onCanvasDrop 
 } from './container/actions'
-import styled from 'styled-components'
-import mapValues from './container/utils/mapValues'
-import { IOnNodeDoubleClick, IOnLabelDoubleClick } from './'
 
 const ModelBox = styled.div`
   width: 100vw;
@@ -78,11 +77,12 @@ const InputBox = styled.div`
   }
 `
 
-
 export interface IFlowChartWithStateProps {
   initialValue: IChart
   Components?: IFlowChartComponents
   config?: IConfig
+  getWorkFlowChartValue?: (workFlowValue: any) => void
+  isAllowAddLinkLabel?: boolean
 }
 
 /**
@@ -144,8 +144,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     onNodeSizeChange, onPortPositionChange, onCanvasDrop,
     onNodeDoubleClick: this.onNodeDoubleClick,
     onLabelDoubleClick: this.onLabelDoubleClick
-  }, (func: any) =>
-      (...args: any) => this.setState(func(...args)))
+  }, (func: any) => (...args: any) => this.setState(func(...args)))
 
   hideModel = () => {
     this.setState({
@@ -227,6 +226,9 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
   }
 
   renderAddNewLinkModel = () => {
+    if (this.props.isAllowAddLinkLabel !== true) {
+      return false
+    }
     return (
       <ModelBox className={this.state.isModelShow ? "" : "hide"}>
         <ModelContent>
@@ -254,8 +256,10 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
         delete node.position.node
       }
     }
-    console.log("flow data: ", JSON.stringify(flowData))
-
+    // console.log("flow data: ", JSON.stringify(flowData))
+    if (!!this.props.getWorkFlowChartValue) {
+      this.props.getWorkFlowChartValue(flowData)
+    }
 
     // when user add new link, he shold add the label of this link
     let addedLinkNumber = 0
@@ -285,7 +289,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     }
 
     if (Object.keys(this.state.nodes).length > this.state.preNodes.length) {
-      console.log("Add Node");
+      // console.log("Add Node");
       let preNodes = this.state.preNodes;
       let currentNodes = Object.keys(this.state.nodes);
       let newNode = currentNodes.filter(node => !preNodes.includes(node))
@@ -308,11 +312,12 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 
   public render () {
     const { Components, config } = this.props
-    console.log("this state: ", this.state)
+    // console.log("this state: ", this.state)
 
     return (
       <React.Fragment>
-        { this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : this.renderAddNewLinkModel()}
+        { this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : ""}
+        { this.state.showModelName === "newLinkModel" ? this.renderAddNewLinkModel() : ""}
         <FlowChart
           chart={this.state}
           callbacks={this.stateActions}

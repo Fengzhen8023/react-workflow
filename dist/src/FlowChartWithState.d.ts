@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { IChart, IConfig, IFlowChartComponents } from './';
-import { IOnNodeDoubleClick, IOnLabelDoubleClick } from './';
+import { IChart, IConfig, IFlowChartComponents, IOnNodeDoubleClick, IOnLabelDoubleClick } from './';
 export interface IFlowChartWithStateProps {
     initialValue: IChart;
     Components?: IFlowChartComponents;
     config?: IConfig;
+    getWorkFlowChartValue?: (workFlowValue: any) => void;
+    isAllowAddLinkLabel?: boolean;
 }
 /**
  * Flow Chart With State
@@ -22,7 +23,7 @@ export declare class FlowChartWithState extends React.Component<IFlowChartWithSt
     setNodeInfo: () => void;
     setLinkInfo: () => void;
     renderAddNewNodeModel: () => JSX.Element;
-    renderAddNewLinkModel: () => JSX.Element;
+    renderAddNewLinkModel: () => false | JSX.Element;
     componentDidUpdate(): void;
     render(): JSX.Element;
 }

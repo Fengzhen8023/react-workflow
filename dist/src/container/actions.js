@@ -160,7 +160,7 @@ exports.onNodeClick = function (_a) {
 exports.onNodeDoubleClick = function (_a) {
     var nodeId = _a.nodeId;
     return function (chart) {
-        console.log("----actions.ts on node double click----");
+        // console.log("----actions.ts on node double click----")
         // if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
         //   chart.selected = {
         //     type: 'node',

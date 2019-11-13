@@ -140,7 +140,7 @@ export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
 }
 
 export const onNodeDoubleClick: IOnNodeDoubleClick = ({ nodeId }) => (chart: IChart) => {
-  console.log("----actions.ts on node double click----")
+  // console.log("----actions.ts on node double click----")
   // if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
   //   chart.selected = {
   //     type: 'node',

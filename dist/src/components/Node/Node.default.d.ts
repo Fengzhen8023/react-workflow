@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import { IConfig, INode } from '../../';
 export interface INodeDefaultProps {
     config: IConfig;
@@ -10,4 +10,4 @@ export interface INodeDefaultProps {
     style?: object;
     ref?: React.Ref<any>;
 }
-export declare const NodeDefault: any;
+export declare const NodeDefault: React.ForwardRefExoticComponent<Pick<INodeDefaultProps, "style" | "children" | "onClick" | "onDoubleClick" | "config" | "node" | "isSelected"> & React.RefAttributes<HTMLDivElement>>;

@@ -8,4 +8,4 @@ export interface IPortDefaultProps {
     isLinkSelected: boolean;
     isLinkHovered: boolean;
 }
-export declare const PortDefault: ({ isLinkSelected, isLinkHovered }: IPortDefaultProps) => JSX.Element;
+export declare const PortDefault: () => JSX.Element;

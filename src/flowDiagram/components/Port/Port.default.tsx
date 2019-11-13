@@ -11,32 +11,25 @@ export interface IPortDefaultProps {
   isLinkHovered: boolean
 }
 
-const PortDefaultOuter = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: white;
+const PortDefaultInner = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background: cornflowerblue;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  &:hover > div {
+
+  &:hover {
     background: cornflowerblue;
+  }
+  & svg {
+    width: 15px;
+    height: 15px;
   }
 `
 
-const PortDefaultInner = styled.div<{ active: boolean }>`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background:  ${(props) => props.active ? 'cornflowerblue' : 'grey' };
-  cursor: pointer;
-`
-
-export const PortDefault = ({ isLinkSelected, isLinkHovered }: IPortDefaultProps) => (
-  <PortDefaultOuter>
-    <PortDefaultInner
-      active={isLinkSelected || isLinkHovered}
-    />
-  </PortDefaultOuter>
+export const PortDefault = () => (
+    <PortDefaultInner />
 )

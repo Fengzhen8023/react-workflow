@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateLinkPath = function (startPos, endPos) {
-    console.log("start point: ", startPos);
-    console.log("end point: ", endPos);
+    // console.log("start point: ", startPos)
+    // console.log("end point: ", endPos)
     if (!endPos.portType) {
         return curvePath(startPos, endPos);
     }

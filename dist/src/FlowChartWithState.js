@@ -29,10 +29,10 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var _1 = require("./");
-var actions_1 = require("./container/actions");
 var styled_components_1 = require("styled-components");
 var mapValues_1 = require("./container/utils/mapValues");
+var _1 = require("./");
+var actions_1 = require("./container/actions");
 var ModelBox = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 100vw;\n  height: 100vh;\n  position: fixed;\n  background: rgba(0,0,0,0.8);\n  z-index: 99;\n\n  &.hide {\n    display: none;\n  }\n"], ["\n  width: 100vw;\n  height: 100vh;\n  position: fixed;\n  background: rgba(0,0,0,0.8);\n  z-index: 99;\n\n  &.hide {\n    display: none;\n  }\n"])));
 var ModelContent = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: relative;\n  width: 50%;\n  background: #fff;\n  margin: 10% auto;\n  border-radius: 10px;\n  overflow: hidden;\n"], ["\n  position: relative;\n  width: 50%;\n  background: #fff;\n  margin: 10% auto;\n  border-radius: 10px;\n  overflow: hidden;\n"])));
 var Button = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  width: 100px;\n  height: 30px;\n  text-align: center;\n  line-height: 27px;\n  border: 2px solid rgb(148,80,81);\n  float: right;\n  margin-right: 40px;\n  margin-bottom: 20px;\n  border-radius: 5px;\n  background: #fff;\n  cursor: pointer;\n"], ["\n  width: 100px;\n  height: 30px;\n  text-align: center;\n  line-height: 27px;\n  border: 2px solid rgb(148,80,81);\n  float: right;\n  margin-right: 40px;\n  margin-bottom: 20px;\n  border-radius: 5px;\n  background: #fff;\n  cursor: pointer;\n"])));
@@ -78,15 +78,13 @@ var FlowChartWithState = /** @class */ (function (_super) {
             onNodeSizeChange: actions_1.onNodeSizeChange, onPortPositionChange: actions_1.onPortPositionChange, onCanvasDrop: actions_1.onCanvasDrop,
             onNodeDoubleClick: _this.onNodeDoubleClick,
             onLabelDoubleClick: _this.onLabelDoubleClick
-        }, function (func) {
-            return function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                return _this.setState(func.apply(void 0, args));
-            };
-        });
+        }, function (func) { return function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return _this.setState(func.apply(void 0, args));
+        }; });
         _this.hideModel = function () {
             _this.setState({
                 isModelShow: false,
@@ -153,6 +151,9 @@ var FlowChartWithState = /** @class */ (function (_super) {
                     React.createElement(Button, { onClick: _this.setNodeInfo }, "Confirm"))));
         };
         _this.renderAddNewLinkModel = function () {
+            if (_this.props.isAllowAddLinkLabel !== true) {
+                return false;
+            }
             return (React.createElement(ModelBox, { className: _this.state.isModelShow ? "" : "hide" },
                 React.createElement(ModelContent, null,
                     React.createElement(HideModel, { onClick: _this.hideModel }, "X"),
@@ -176,7 +177,10 @@ var FlowChartWithState = /** @class */ (function (_super) {
                 delete node.position.node;
             }
         }
-        console.log("flow data: ", JSON.stringify(flowData));
+        // console.log("flow data: ", JSON.stringify(flowData))
+        if (!!this.props.getWorkFlowChartValue) {
+            this.props.getWorkFlowChartValue(flowData);
+        }
         // when user add new link, he shold add the label of this link
         var addedLinkNumber = 0;
         for (var linkKey in this.state.links) {
@@ -201,7 +205,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
             }); });
         }
         if (Object.keys(this.state.nodes).length > this.state.preNodes.length) {
-            console.log("Add Node");
+            // console.log("Add Node");
             var preNodes_1 = this.state.preNodes;
             var currentNodes = Object.keys(this.state.nodes);
             var newNode = currentNodes.filter(function (node) { return !preNodes_1.includes(node); });
@@ -222,9 +226,10 @@ var FlowChartWithState = /** @class */ (function (_super) {
     };
     FlowChartWithState.prototype.render = function () {
         var _a = this.props, Components = _a.Components, config = _a.config;
-        console.log("this state: ", this.state);
+        // console.log("this state: ", this.state)
         return (React.createElement(React.Fragment, null,
-            this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : this.renderAddNewLinkModel(),
+            this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : "",
+            this.state.showModelName === "newLinkModel" ? this.renderAddNewLinkModel() : "",
             React.createElement(_1.FlowChart, { chart: this.state, callbacks: this.stateActions, Components: Components, config: config })));
     };
     return FlowChartWithState;

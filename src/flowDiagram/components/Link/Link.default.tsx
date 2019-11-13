@@ -30,7 +30,7 @@ export const LinkDefault = ({
   const points = generateLinkPath(startPos, endPos)
   const arrow = generateArrowPath(startPos, endPos)
 
-  console.log("arrow: ", arrow)
+  // console.log("arrow: ", arrow)
 
   return (
     <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
