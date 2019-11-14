@@ -47,5 +47,6 @@ export interface IFlowChartProps {
      * Don't store state here as it may trigger re-renders
      */
     config?: IConfig;
+    isAllowAddLinkLabel: boolean;
 }
 export declare const FlowChart: (props: IFlowChartProps) => JSX.Element;

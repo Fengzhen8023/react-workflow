@@ -323,6 +323,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
           callbacks={this.stateActions}
           Components={ Components }
           config={config}
+          isAllowAddLinkLabel={!!this.props.isAllowAddLinkLabel}
         />
       </React.Fragment>
     )

@@ -230,7 +230,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
         return (React.createElement(React.Fragment, null,
             this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : "",
             this.state.showModelName === "newLinkModel" ? this.renderAddNewLinkModel() : "",
-            React.createElement(_1.FlowChart, { chart: this.state, callbacks: this.stateActions, Components: Components, config: config })));
+            React.createElement(_1.FlowChart, { chart: this.state, callbacks: this.stateActions, Components: Components, config: config, isAllowAddLinkLabel: !!this.props.isAllowAddLinkLabel })));
     };
     return FlowChartWithState;
 }(React.Component));

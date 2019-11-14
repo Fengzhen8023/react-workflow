@@ -56,6 +56,7 @@ export interface IFlowChartProps {
    * Don't store state here as it may trigger re-renders
    */
   config?: IConfig
+  isAllowAddLinkLabel: boolean
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -64,6 +65,7 @@ export const FlowChart = (props: IFlowChartProps) => {
 
   const {
     chart,
+    isAllowAddLinkLabel,
     callbacks: {
       onDragNode,
       onDragCanvas,
@@ -146,6 +148,7 @@ export const FlowChart = (props: IFlowChartProps) => {
             Component={Link}
             isSelected={isSelected}
             isHovered={isHovered}
+            isAllowAddLinkLabel={isAllowAddLinkLabel}
             fromNode={nodes[fromNodeId]}
             toNode={toNodeId ? nodes[toNodeId] : undefined}
             {...linkCallbacks}

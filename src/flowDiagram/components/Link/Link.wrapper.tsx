@@ -10,6 +10,7 @@ export interface ILinkWrapperProps {
   linkLabel: string
   isSelected: boolean
   isHovered: boolean
+  isAllowAddLinkLabel: boolean
   fromNode: INode
   toNode: INode | undefined
   onLinkMouseEnter: IOnLinkMouseEnter
@@ -27,6 +28,7 @@ export const LinkWrapper = React.memo(({
   onLinkMouseLeave,
   onLinkClick,
   onLabelDoubleClick,
+  isAllowAddLinkLabel,
   isSelected,
   isHovered,
   fromNode,
@@ -56,6 +58,7 @@ export const LinkWrapper = React.memo(({
       onLinkClick={config.readonly ? noop : onLinkClick}
       isSelected={isSelected}
       isHovered={isHovered}
+      isAllowAddLinkLabel={isAllowAddLinkLabel}
     />
   )
 })

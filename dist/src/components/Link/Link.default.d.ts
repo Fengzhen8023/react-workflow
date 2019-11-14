@@ -11,5 +11,6 @@ export interface ILinkDefaultProps {
     onLabelDoubleClick: IOnLabelDoubleClick;
     isHovered: boolean;
     isSelected: boolean;
+    isAllowAddLinkLabel: boolean;
 }
-export declare const LinkDefault: ({ config, link, startPos, endPos, onLinkMouseEnter, onLinkMouseLeave, onLabelDoubleClick, onLinkClick, isHovered, isSelected, }: ILinkDefaultProps) => JSX.Element;
+export declare const LinkDefault: ({ config, link, startPos, endPos, onLinkMouseEnter, onLinkMouseLeave, onLabelDoubleClick, onLinkClick, isHovered, isSelected, isAllowAddLinkLabel }: ILinkDefaultProps) => JSX.Element;

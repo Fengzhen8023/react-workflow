@@ -7,6 +7,7 @@ export interface ILinkWrapperProps {
     linkLabel: string;
     isSelected: boolean;
     isHovered: boolean;
+    isAllowAddLinkLabel: boolean;
     fromNode: INode;
     toNode: INode | undefined;
     onLinkMouseEnter: IOnLinkMouseEnter;
@@ -15,4 +16,4 @@ export interface ILinkWrapperProps {
     onLinkClick: IOnLinkClick;
     Component?: React.FunctionComponent<ILinkDefaultProps>;
 }
-export declare const LinkWrapper: React.MemoExoticComponent<({ config, Component, link, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, onLabelDoubleClick, isSelected, isHovered, fromNode, toNode, }: ILinkWrapperProps) => JSX.Element | null>;
+export declare const LinkWrapper: React.MemoExoticComponent<({ config, Component, link, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, onLabelDoubleClick, isAllowAddLinkLabel, isSelected, isHovered, fromNode, toNode, }: ILinkWrapperProps) => JSX.Element | null>;
