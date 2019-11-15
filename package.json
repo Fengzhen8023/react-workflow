@@ -1,14 +1,20 @@
 {
   "name": "react-work-flow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/src/index.js",
   "files": [
     "dist"
   ],
   "description": "A work-flow package coded by React",
-  "keywords": [ "React", "work flow", "react work flow" ],
+  "keywords": [
+    "React",
+    "work flow",
+    "react work flow"
+  ],
   "author": "Fengzhen8023",
-  "contributors": [ "Fengzhen8023" ],
+  "contributors": [
+    "Fengzhen8023"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Fengzhen8023/react-workflow.git"
