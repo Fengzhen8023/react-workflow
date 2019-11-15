@@ -10,7 +10,7 @@ npm i react-work-flow
 
 在介绍这款插件之前，我们首先通过下面的GIF图片来看一下，这款插件可以用来做什么：
 
-![](https://github.com/Fengzhen8023/react-workflow/blob/master/guideImage/002.gif)
+![](https://upload-images.jianshu.io/upload_images/3879603-5717e2809dc2f674.gif)
 
 如上图所示，这是一款React插件，主要用来帮助用户快速搭建一个 **工作流（work-flow）** 的图形界面。
 
@@ -77,7 +77,7 @@ export default DragAndDropSidebar;
 
 页面搭建完成之后，将该页面放进自己的项目中，打开网页，我们就可以看到一个空白的work-flow操作界面：
 
-![](https://github.com/Fengzhen8023/react-workflow/blob/master/guideImage/blank.png)
+![](https://upload-images.jianshu.io/upload_images/3879603-287624539f6d1167.png)
 
 #### 2. 获取work-flow的JSON数据
 
