@@ -6,7 +6,7 @@
     "dist"
   ],
   "description": "A work-flow package coded by React",
-  "keywords": [ "React", "work flow" ],
+  "keywords": [ "React", "work flow", "react work flow" ],
   "author": "Fengzhen8023",
   "contributors": [ "Fengzhen8023" ],
   "repository": {
