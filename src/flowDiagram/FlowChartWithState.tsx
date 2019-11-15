@@ -10,9 +10,9 @@ import {
 } from './container/actions'
 
 const ModelBox = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
+  width: 100%;
+  height: 100%;
+  position: absolute;
   background: rgba(0,0,0,0.8);
   z-index: 99;
 
@@ -73,7 +73,10 @@ const InputBox = styled.div`
 
   & input {
     width: 50%;
-    height: 30px
+    height: 30px;
+    border: 0.1rem solid rgb(0,0,0);
+    border-radius: 10px;
+    padding-left: 0.5rem;
   }
 `
 
