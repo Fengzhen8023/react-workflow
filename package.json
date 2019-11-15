@@ -5,6 +5,16 @@
   "files": [
     "dist"
   ],
+  "description": "A work-flow package coded by React",
+  "keywords": [ "React", "work flow" ],
+  "author": "Fengzhen8023",
+  "contributors": [ "Fengzhen8023" ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fengzhen8023/react-workflow.git"
+  },
+  "bugs": "https://github.com/Fengzhen8023/react-workflow/issues",
+  "homepage": "https://github.com/Fengzhen8023/react-workflow",
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
