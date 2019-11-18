@@ -1,49 +1,49 @@
 #### [中文文档](<https://github.com/Fengzhen8023/react-workflow/blob/master/README-ZH-CN.md>)    [English document](<https://github.com/Fengzhen8023/react-workflow/blob/master/README.md>)
 
-## Install
+## 安装
 
 ```shell
 npm i react-work-flow
 ```
 
-## About the react-work-flow 
+## react-work-flow 简介
 
-First of all, thank **[MrBlenny](https://github.com/MrBlenny)** very much because this React plugin is based on his Github repository **[react-flow-chart](<https://github.com/MrBlenny/react-flow-chart>)** .
+首先非常感谢 **[MrBlenny](https://github.com/MrBlenny)** ， 因为这款插件是在 **[react-flow-chart](<https://github.com/MrBlenny/react-flow-chart>)** 的基础之上完成的。
 
-Before introducing this plugin, let's first take a look at what this plugin can do with the following GIF image:
+在介绍这款插件之前，我们首先通过下面的GIF图片来看一下，这款插件可以用来做什么：
 
-If the GIF image can't be loaded, you can click **[Here](<https://raw.githubusercontent.com/Fengzhen8023/react-workflow/master/guideImage/002.gif>)** to view.
+如果GIF图片加载不出来，你可以点击 **[此处](<https://raw.githubusercontent.com/Fengzhen8023/react-workflow/master/guideImage/002.gif>)** 进行查看。
 
 ![](.\guideImage\002.gif)
 
-Shown above, The React plugin is designed to help users quickly build a workflow GUI.
+如上图所示，这是一款React插件，主要用来帮助用户快速搭建一个 **工作流（work-flow）** 的图形界面。
 
-The main basic functions of the plugin are as follows:
+插件的主要基本功能有：
 
-1. Drag and drop the add node and add the node name and description information.
-2. Drag and drop to add a connection to connect two nodes.And optionally add a line of description label.
-3. Double-click the node to modify the name and description of the node.
-4. Double-click the line to modify the label of the line.
-5. Click the node or connection, and press the **Back key** to delete the node or connection
+1. 推拽添加节点，并添加节点的名字和描述信息
+2. 拖拽添加连线，连接两个节点。并选择性地添加连线地说明文字
+3. 双击节点，修改节点的名字和描述信息
+4. 双击连线，修改连线的描述信息
+5. 点击节点或连线，按下 **Back** 键删除节点或连线
 
-Advanced features of the plug-in include：
+插件的高级功能有：
 
-1. Custom style, developers can customize the modification of node, wire style
-2. More advanced features are in development
+1. 自定义样式，开发人员可以自定义修改节点、连线的样式
+2. 更多高级功能正在开发中
 
-The plugin is very flexible, and many of its functions can be controlled on their own, as we'll see in a moment.
+该插件的功能非常灵活，很多功能都可以自行进行控制，具体的做法我们马上就会讲到。
 
-## Use of the Plugin
+## 插件的使用
 
-#### 1. Build the most basic page
+#### 1. 搭建最基本的页面
 
-After the plugin is successfully installed, we first set up the basic page. The code example is as follows:
+成功安装插件之后，我们先将基本的页面搭建起来，代码实例如下：
 
 ```js
 import * as React from 'react'
 import { FlowChartWithState, Content, Page, Sidebar, SidebarItem } from 'react-work-flow'
 
-// Initializes an empty panel
+// 初始化一个空画板
 const chartSimple = {
     offset: {
         x: 0,
@@ -79,18 +79,18 @@ const DragAndDropSidebar = () => {
 export default DragAndDropSidebar;
 ```
 
-After the page is built, put the page into our own project. When we open the page, we can see a blank work-flow GUI:
+页面搭建完成之后，将该页面放进自己的项目中，打开网页，我们就可以看到一个空白的work-flow操作界面：
 
 ![](.\guideImage\blank.png)
 
-#### 2. Get the JSON Data of work-flow
+#### 2. 获取work-flow的JSON数据
 
-When we successfully create a work-flow, we definitely want to save its relevant data to the database, so that we can use this data to re-render the work-flow later.
+当我们当我们成功创建一个work-flow之后，肯定是想要把它的相关数据保存到数据库中的，以方便后期我们使用这条数据重新渲染work-flow。
 
-This is a JSON format of the data, the sample code to get the data is as follows:
+这是一个JSON格式的数据，获取数据的示例代码如下：
 
 ```js
-// Other code can refer to the above example
+// 无关代码已经省略
 
 const DragAndDropSidebar = () => {
     let workFlowValue = {}
@@ -112,12 +112,12 @@ const DragAndDropSidebar = () => {
 }
 ```
 
-#### 3. Custom rules of adding links that do not allow adding links in some cases
+#### 3. 自定义连线的规则，在某些情况下不允许添加连线
 
-In some cases, we need to control the permission of the user to add a link. Under inappropriate circumstances, the user is not allowed to add a link. For example, the user is not allowed to connect to the same node with a link.
+在有些情况下，我们需要控制用户添加连线的权限，在不适当的情况下，不允许用户添加连线，比如：不允许用户使用连线连接同一个节点，那么可以使用以下以下代码进行控制：
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 function validateLink({ linkId, fromNodeId, fromPortId, toNodeId, toPortId, chart }) {
     if (fromNodeId === toNodeId) {
@@ -140,12 +140,12 @@ const DragAndDropSidebar = () => (
 )
 ```
 
-#### 4. Whether users are allowed to edit work-flow
+#### 4. 是否允许用户编辑work-flow
 
-In some cases, we may have a need to allow users to view only work-flow, but not to edit work-flow.Then the following code can be used for control:
+在某些情况下，我们可能有这样的需求，只允许用户查看work-flow，但是不允许用户编辑work-flow。那么可以使用以下代码进行控制：
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 const DragAndDropSidebar = () => (
   <Page>
@@ -159,12 +159,12 @@ const DragAndDropSidebar = () => (
 )
 ```
 
-#### 5.Whether allowed to add caption to the line
+#### 5. 是否允许给连线添加说明文字
 
-When adding a new link or double-clicking the link, the description cannot be added by default. If you want to enable this function, you can directly pass parameters to enable the function:
+在添加一条新的连线或者双击连线时，默认情况下是不能添加说明的，如果想要开启这个功能，直接进行传参，开启功能：
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 const DragAndDropSidebar = () => {
     return (
@@ -179,22 +179,22 @@ const DragAndDropSidebar = () => {
 }
 ```
 
-#### 6. Custom style, modify the node style
+#### 6. 自定义样式，修改节点的样式
 
-When you custom the style, I recommend using **[styled-components](<https://www.npmjs.com/package/styled-components>)** for quick custom style. First of all, execute the below code to install the plugin.
+自定义样式的时候，建议大家使用 **[styled-components](<https://www.npmjs.com/package/styled-components>)** 插件进行快速定义样式，首先执行以下代码安装该插件：
 
 ```shell
 npm i styled-components
 ```
 
-Then refer to the following code to customize and modify the node style:
+然后参考如下代码进行自定义修改节点的样式：
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 import styled from 'styled-components'
 
-// Custom the style of start Node
+// 自定义 start 节点的样式
 const StartPoint = styled.div`
     position: absolute;
     width: 100px;
@@ -208,7 +208,7 @@ const StartPoint = styled.div`
     border-radius: 50%;
 `
 
-// Custom the style of proces-queue Node
+// 自定义 proces-queue 节点的样式
 const ProcessQueue = styled.div`
     width: 200px;
     height: 120px;
@@ -223,7 +223,7 @@ const ProcessQueue = styled.div`
 }
 `
 
-// Custom the style of process-point Node
+// 自定义 process-point 节点的样式
 const ProcessPoint = styled.div`
     width: 200px;
     height: 120px;
@@ -237,7 +237,7 @@ const ProcessPoint = styled.div`
 }
 `
 
-// Custom the style of end Node
+// 自定义 end 节点的样式
 const EndPoint = styled.div`
     position: absolute;
     width: 100px;
@@ -313,21 +313,21 @@ const DragAndDropSidebar = () => {
 }
 ```
 
-Note: so far, there are only four types of nodes in this plugin：start、process-queue、process-point and end。
+需要注意的是：到目前为止，本插件中只有四种类型的节点：start、process-queue、process-point、end。
 
-Adding other types of nodes is not currently supported, but it may be available in future releases.
+目前暂不支持增添其他类型的节点，但是在后续版本中，可能会有这个功能。
 
-#### 7.  Custom style, modify the style of node in the right sidebar  
+#### 7. 自定义样式，修改右侧边栏中节点的样式
 
-At this point, there are only four types of nodes in the plug-in, so we can only change the styles of these four types of nodes for the time being. Later versions will allow developers to customize their own nodes.
+到目前位置，该插件中只有四种类型的节点，所以我们暂时只能修改这四种节点的样式，在后续版本中，会允许开发者自定义添加自己的节点。
 
-The way to modify the style is very simple. The reference code is as follows:
+修改样式的方式非常简单，参考代码如下：
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 
-// Define the style, note that it is a variable of type string
+// 定义样式，注意是一个字符串类型的变量
 const startItemStyle = `
   {
     width: 100px;
@@ -340,7 +340,7 @@ const startItemStyle = `
   }
 `
 
-// Pass custom styles to child elements
+// 将自定义样式传给子元素
 const DragAndDropSidebar = () => (
   <Page>
     <Sidebar>
@@ -350,12 +350,12 @@ const DragAndDropSidebar = () => (
 )
 ```
 
-#### 8. Custom style, modify the link style
+#### 8. 自定义样式，修改连线的样式
 
-The way to modify the line style is similar to the way to modify the node style. The reference code is as follows:
+修改连线样式的方法和修改节点的样式大同小异，参考代码如下：
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 import styled from 'styled-components'
 import { LinkDefault, generateLabelPosition  } from 'react-work-flow'
@@ -406,10 +406,10 @@ const DragAndDropSidebar = () => {
 }
 ```
 
-But be aware that when user add a new link or user double-click the link, if you allow him to add the label, When customize **LinkCustom** , be sure to add the double-click event **onDoubleClick**. The example code is as follows:
+但是要注意，如果你允许用户在添加连线的时候，或者是用户双击连线的时候，添加文字说明。那么在自定义 **LinkCustom** 的时候，一定要添加双击事件 **onDoubleClick** ， 示例代码如下：
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 const LinkCustom = (props) => {
   const { startPos, endPos, link, onLabelDoubleClick } = props
@@ -429,12 +429,12 @@ const LinkCustom = (props) => {
 }
 ```
 
-#### 9. Custom style, modify the style of the ports on the node
+#### 9. 自定义样式，修改节点上的端点
 
-The method to modify the endpoint style is similar to the method to modify the node style. The reference code is as follows:
+修改端点样式的方法和修改节点的样式大同小异，参考代码如下：
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 import styled from 'styled-components'
 
@@ -494,14 +494,12 @@ const DragAndDropSidebar = () => {
 export default DragAndDropSidebar;
 ```
 
-#### 10. Customize the endpoint on the node, modifying its number and position
+#### 10. 自定义节点上的端点，修改其个数和位置
 
-By default, each node in the plugin has four ports, and they are in the top, right, bottom and left.
-
-If this default configuration does not meet your requirements, you can modify the number and location of ports in the following ways.
+默认情况下，插件中的每个节点有四个端点，分别分布在上右下左四个位置。如果这种默认配置不符合你的需求，那么你可以通过以下方式修改端点的个数和位置。
 
 ```js
-// Other code can refer to the above example
+// 其他代码可以参考上述示例
 
 const startPoint = {
   port1: {
@@ -547,20 +545,18 @@ const DragAndDropSidebar = () => (
 )
 ```
 
-Through the above code, we can set the number of ports of start type node to 8. It should be noted that each node can have up to eight endpoints.
+通过上面的的代码，我们就可以将start类型节点的端点个数设置为8，需要注意的是，每一个节点最多可以拥有八个端点。
 
-If you need to set another number of endpoints, you can simply delete the attributes of the **startPoint** object in the above code.
+如果你需要设置其他数量的端点，可以直接将对上述代码中 **startPoint** 对象的属性进行删改。
 
-The **id** in the attribute is the id of the endpoint, and the id of different endpoints is different.
+属性中的 **id** 是端点的id，不同端点的id是不同的；属性中的 **type** 是端点的位置，指定这个端点在节点的哪一侧，比如 **bottom** 就说明，这个端点位于节点的底部。
 
-The **type** in the attribute is the location of the endpoint, specifying which side of the node the endpoint is on. For example, **bottom** indicates that the endpoint is at the bottom of the node.
+## 写在最后
 
-## In the last
+这就是该插件的功能说明，如果以上功能还是满足不了你的需求，非常欢迎你克隆代码进行修改。
 
-This is the function of the plug-in description, if the above function still can not meet your needs, you are very welcome to clone the code to modify.
+如果您对该插件有建议、疑问或者是意见，请及时告知我，万分感谢。
 
-If you have any Suggestions, questions or comments about this plugin, please let me know in time. Thank you very much.
+作者的相关信息：
 
-Information about the author:
-
-**[Jianshu Homepage](<https://www.jianshu.com/u/231315b8e406>)**    **[Juejin Homepage](<https://juejin.im/user/5c7a97d56fb9a049d132da41>)**
+**[简书主页](<https://www.jianshu.com/u/231315b8e406>)**    **[掘金主页](<https://juejin.im/user/5c7a97d56fb9a049d132da41>)**
