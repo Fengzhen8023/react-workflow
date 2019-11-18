@@ -153,7 +153,8 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     this.setState({
       isModelShow: false,
       nodeName: "",
-      nodeDescription: ""
+      nodeDescription: "",
+      linkLabel: ""
     });
   }
 
