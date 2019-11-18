@@ -168,6 +168,18 @@ function validateLink({ linkId, fromNodeId, fromPortId, toNodeId, toPortId, char
   return true;
 }
 
+const startItemStyle = `
+  {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background: red;
+    line-height: 100px;
+    padding: 0;
+    text-align: center;
+  }
+`
+
 const startPoint = {
   port1: {
     id: 'port1',
@@ -248,11 +260,12 @@ const DragAndDropSidebar = () => (
   <Page>
     <Content>
       <FlowChartWithState
-        isAllowAddLinkLabel = {false}
+        isAllowAddLinkLabel = {true}
         initialValue={chartSimple}
         Components={{
           Port: PortCustom,
-          Node: NodeCustom
+          Node: NodeCustom,
+          Link: LinkCustom
         }}
         config={{ validateLink: validateLink }} 
       />
@@ -261,7 +274,7 @@ const DragAndDropSidebar = () => (
       <Message>
         Drag and drop these items onto the canvas.
       </Message>
-      <SidebarItem type="start" ports={startPoint} />
+      <SidebarItem type="start" ports={startPoint} itemStyle={startItemStyle} />
       <SidebarItem type="process-queue" ports={processQueuePoint} />
       <SidebarItem type="process-point"  ports={processPoint} />
       <SidebarItem type="end" ports={ endPoint } />
