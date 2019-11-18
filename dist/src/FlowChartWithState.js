@@ -89,7 +89,8 @@ var FlowChartWithState = /** @class */ (function (_super) {
             _this.setState({
                 isModelShow: false,
                 nodeName: "",
-                nodeDescription: ""
+                nodeDescription: "",
+                linkLabel: ""
             });
         };
         _this.handleNameInput = function (e) {

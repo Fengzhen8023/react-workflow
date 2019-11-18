@@ -165,6 +165,10 @@ const LinkCustom = (props) => {
 
 function validateLink({ linkId, fromNodeId, fromPortId, toNodeId, toPortId, chart }): boolean {
 
+  if (fromNodeId === toNodeId) {
+    return false
+  }
+
   return true;
 }
 
@@ -197,6 +201,22 @@ const startPoint = {
     id: 'port4',
     type: 'bottom',
   },
+  port5: {
+    id: 'port5',
+    type: 'left',
+  },
+  port6: {
+    id: 'port6',
+    type: 'right',
+  },
+  port7: {
+    id: 'port7',
+    type: 'top',
+  },
+  port8: {
+    id: 'port8',
+    type: 'bottom',
+  }
 };
 
 const processQueuePoint = {
@@ -267,7 +287,7 @@ const DragAndDropSidebar = () => (
           Node: NodeCustom,
           Link: LinkCustom
         }}
-        config={{ validateLink: validateLink }} 
+        config={{ readonly: true }} 
       />
     </Content>
     <Sidebar>
