@@ -10,7 +10,7 @@ module.exports = {
     ['import', {
       libraryName: 'antd',
       libraryDirectory: 'lib',
-      style: true
+      style: "css"
     }],
     ['@babel/plugin-transform-typescript', { legacy: true }],
     ['@babel/plugin-proposal-decorators', { legacy: true }],

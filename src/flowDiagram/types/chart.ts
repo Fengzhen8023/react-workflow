@@ -17,7 +17,8 @@ export interface IChart {
   isModelShow: boolean
   showModelName: string
   nodeName: string
-  nodeDescription: string
+  nodeId: string
+  nodeRoleOption: string
   linkLabel: string
   newNodeId: string
   newLinkId: string

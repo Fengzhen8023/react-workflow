@@ -59,6 +59,7 @@
     "@types/lodash": "^4.14.147",
     "@types/styled-components": "^4.4.0",
     "@types/uuid": "^3.4.6",
+    "antd": "^3.25.2",
     "closest": "^0.0.1",
     "dagre": "^0.8.4",
     "lodash": "^4.17.15",

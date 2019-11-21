@@ -16,7 +16,7 @@ exports.NodeInnerDefault = function (_a) {
             " "),
         React.createElement("p", null,
             " ",
-            (!!node.properties && !!node.properties.description) && "" + node.properties.description,
+            (!!node.properties && !!node.properties.Id) && "" + node.properties.Id,
             " ")));
 };
 var templateObject_1;

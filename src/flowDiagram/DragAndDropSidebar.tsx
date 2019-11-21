@@ -276,18 +276,30 @@ const endPoint = {
   },
 }
 
+const nodeRoleOptions = [
+  {
+    rGuid: "001",
+    rName: "001-001"
+  },
+  {
+    rGuid: "002",
+    rName: "001-002"
+  }
+]
+
 const DragAndDropSidebar = () => (
   <Page>
     <Content>
       <FlowChartWithState
         isAllowAddLinkLabel = {true}
         initialValue={chartSimple}
+        nodeRoleOptions={nodeRoleOptions}
         Components={{
           Port: PortCustom,
           Node: NodeCustom,
           Link: LinkCustom
         }}
-        config={{ readonly: true }} 
+        config={{ readonly: false }} 
       />
     </Content>
     <Sidebar>

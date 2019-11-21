@@ -8,6 +8,8 @@ import {
   onCanvasClick, onDeleteKey, onNodeClick,
   onNodeSizeChange, onPortPositionChange, onCanvasDrop 
 } from './container/actions'
+import 'antd/dist/antd.css'
+import { Select, Input, Icon, Button } from 'antd'
 
 const ModelBox = styled.div`
   width: 100%;
@@ -30,17 +32,13 @@ const ModelContent = styled.div`
   overflow: hidden;
 `
 
-const Button =styled.div`
+const ButtonBox =styled.div`
   width: 100px;
   height: 30px;
   text-align: center;
-  line-height: 27px;
-  border: 2px solid rgb(148,80,81);
   float: right;
   margin-right: 40px;
   margin-bottom: 20px;
-  border-radius: 5px;
-  background: #fff;
   cursor: pointer;
 `
 
@@ -48,16 +46,20 @@ const HideModel = styled.div`
   display: inline-block;
   height: 20px;
   width: 20px;
-  background: rgb(148,80,81);
   text-align: center;
   line-height: 20px;
   float: right;
   color: white;
   position: absolute;
-  right: 5px;
+  right: 10px;
   top: 5px;
   border-radius: 5px;
   cursor: pointer;
+
+  & i {
+    color: #40a9ff;
+    font-size: 20px;
+  }
 `
 
 const InputBox = styled.div`
@@ -74,9 +76,11 @@ const InputBox = styled.div`
   & input {
     width: 50%;
     height: 30px;
-    border: 0.1rem solid rgb(0,0,0);
-    border-radius: 10px;
     padding-left: 0.5rem;
+  }
+
+  & .ant-select {
+    width: 50%;
   }
 `
 
@@ -86,6 +90,7 @@ export interface IFlowChartWithStateProps {
   config?: IConfig
   getWorkFlowChartValue?: (workFlowValue: any) => void
   isAllowAddLinkLabel?: boolean
+  nodeRoleOptions: any[]
 }
 
 /**
@@ -101,7 +106,8 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
       isModelShow: false,
       showModelName: "",
       nodeName: "",
-      nodeDescription: "",
+      nodeId: "",
+      nodeRoleOption: "",
       linkLabel: "",
       newNodeId: "",
       clickNodeId: "",
@@ -123,7 +129,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
       showModelName: "newNodeModel",
       clickNodeId: nodeId,
       nodeName: clickNodeProperties.name,
-      nodeDescription: clickNodeProperties.description
+      nodeId: clickNodeProperties.Id
     })
   }
 
@@ -153,7 +159,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     this.setState({
       isModelShow: false,
       nodeName: "",
-      nodeDescription: "",
+      nodeId: "",
       linkLabel: ""
     });
   }
@@ -166,7 +172,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 
   handleDescriptionInput = (e: any) => {
     this.setState({
-      nodeDescription: e.currentTarget.value
+      nodeId: e.currentTarget.value
     });
   }
 
@@ -181,7 +187,8 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     let _nodeId = this.state.modelOption === "addNode" ? this.state.newNodeId : this.state.clickNodeId
     _nodes[_nodeId].properties = {
       name: this.state.nodeName,
-      description: this.state.nodeDescription
+      Id: this.state.nodeId,
+      nodeRole: this.state.nodeRoleOption
     }
     this.setState({
       nodes: _nodes,
@@ -208,22 +215,44 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     });
   }
 
+  handleNodeRoleChange = (value: string): void => {
+    console.log(value)
+    this.setState({
+      nodeRoleOption: value
+    })
+  }
+
   renderAddNewNodeModel = () => {
+    const { nodeRoleOptions = [] } = this.props
+    console.log("nodeRoleOptions: ", nodeRoleOptions)
+    const { Option } = Select;
     return (
       <ModelBox className={this.state.isModelShow ? "" : "hide"}>
         <ModelContent>
-          <HideModel onClick={this.hideModel}>X</HideModel>
+          <HideModel onClick={this.hideModel}>
+            <Icon type="close-circle" />
+          </HideModel>
           <div className="InputBox">
             <InputBox>
               <label>Name:</label>
-              <input onChange={this.handleNameInput} value={this.state.nodeName} type="text" />
+              <Input onChange={this.handleNameInput} value={this.state.nodeName} type="text" />
             </InputBox>
             <InputBox>
-              <label>Description:</label>
-              <input onChange={this.handleDescriptionInput} value={this.state.nodeDescription} type="text" />
+              <label>Id:</label>
+              <Input onChange={this.handleDescriptionInput} value={this.state.nodeId} type="text" />
+            </InputBox>
+            <InputBox>
+                <label>Role:</label>
+                <Select defaultValue={nodeRoleOptions[0].rGuid} onChange={this.handleNodeRoleChange}>
+                  {
+                    nodeRoleOptions.map(role => (<Option key={role.rGuid} value={!!role ? role.rGuid : ""}>{!!role ? role.rName : ""}</Option>))
+                  }
+                </Select>
             </InputBox>
           </div>
-          <Button onClick={this.setNodeInfo}>Confirm</Button>
+          <ButtonBox>
+            <Button type="primary" onClick={this.setNodeInfo}>Confirm</Button>
+          </ButtonBox>
         </ModelContent>
       </ModelBox>
     )
@@ -236,14 +265,18 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     return (
       <ModelBox className={this.state.isModelShow ? "" : "hide"}>
         <ModelContent>
-          <HideModel onClick={this.hideModel}>X</HideModel>
+          <HideModel onClick={this.hideModel}>
+            <Icon type="close-circle" />
+          </HideModel>
           <div className="InputBox">
             <InputBox>
-              <label>Description:</label>
-              <input onChange={this.handleLinkDescriptionInput} value={this.state.linkLabel} type="text" />
+              <label>Name:</label>
+              <Input onChange={this.handleLinkDescriptionInput} value={this.state.linkLabel} type="text" />
             </InputBox>
           </div>
-          <Button onClick={this.setLinkInfo}>Confirm</Button>
+          <ButtonBox>
+            <Button type="primary" onClick={this.setLinkInfo}>Confirm</Button>
+          </ButtonBox>
         </ModelContent>
       </ModelBox>
     )
@@ -304,7 +337,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
         modelOption: "addNode",
         newNodeId: newNode[0],
         nodeName: "",
-        nodeDescription: ""
+        nodeId: ""
       });
     }
     if (Object.keys(this.state.nodes).length != this.state.preNodes.length) {
@@ -316,7 +349,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 
   public render () {
     const { Components, config } = this.props
-    // console.log("this state: ", this.state)
+    console.log("this state: ", this.state)
 
     return (
       <React.Fragment>
