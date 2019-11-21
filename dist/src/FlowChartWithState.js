@@ -142,14 +142,14 @@ var FlowChartWithState = /** @class */ (function (_super) {
             });
         };
         _this.handleNodeRoleChange = function (value) {
-            console.log(value);
+            // console.log(value)
             _this.setState({
                 nodeRoleOption: value
             });
         };
         _this.renderAddNewNodeModel = function () {
             var _a = _this.props.nodeRoleOptions, nodeRoleOptions = _a === void 0 ? [] : _a;
-            console.log("nodeRoleOptions: ", nodeRoleOptions);
+            // console.log("nodeRoleOptions: ", nodeRoleOptions)
             var Option = antd_1.Select.Option;
             return (React.createElement(ModelBox, { className: _this.state.isModelShow ? "" : "hide" },
                 React.createElement(ModelContent, null,
@@ -246,7 +246,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
     };
     FlowChartWithState.prototype.render = function () {
         var _a = this.props, Components = _a.Components, config = _a.config;
-        console.log("this state: ", this.state);
+        // console.log("this state: ", this.state)
         return (React.createElement(React.Fragment, null,
             this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : "",
             this.state.showModelName === "newLinkModel" ? this.renderAddNewLinkModel() : "",

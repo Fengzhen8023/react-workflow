@@ -287,6 +287,13 @@ const nodeRoleOptions = [
   }
 ]
 
+let workFlowValue = {}
+ 
+let getWorkFlowChartValue = (newWorkFlowValue) => {
+    workFlowValue = newWorkFlowValue
+    console.log("work-flow 的JSON数据： ", JSON.stringify(workFlowValue))
+}
+
 const DragAndDropSidebar = () => (
   <Page>
     <Content>
@@ -294,6 +301,7 @@ const DragAndDropSidebar = () => (
         isAllowAddLinkLabel = {true}
         initialValue={chartSimple}
         nodeRoleOptions={nodeRoleOptions}
+        getWorkFlowChartValue={getWorkFlowChartValue}
         Components={{
           Port: PortCustom,
           Node: NodeCustom,

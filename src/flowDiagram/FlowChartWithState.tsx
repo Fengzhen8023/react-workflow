@@ -216,7 +216,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
   }
 
   handleNodeRoleChange = (value: string): void => {
-    console.log(value)
+    // console.log(value)
     this.setState({
       nodeRoleOption: value
     })
@@ -224,7 +224,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 
   renderAddNewNodeModel = () => {
     const { nodeRoleOptions = [] } = this.props
-    console.log("nodeRoleOptions: ", nodeRoleOptions)
+    // console.log("nodeRoleOptions: ", nodeRoleOptions)
     const { Option } = Select;
     return (
       <ModelBox className={this.state.isModelShow ? "" : "hide"}>
@@ -349,7 +349,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 
   public render () {
     const { Components, config } = this.props
-    console.log("this state: ", this.state)
+    // console.log("this state: ", this.state)
 
     return (
       <React.Fragment>
