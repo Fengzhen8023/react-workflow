@@ -148,7 +148,7 @@ const PortCustom = (props: IPortDefaultProps) => {
 }
 
 const LinkCustom = (props) => {
-  console.log("----props---- ", props)
+  // console.log("----props---- ", props)
   const { startPos, endPos, link, onLabelDoubleClick } = props
   const { centerX, centerY } = generateLabelPosition(startPos, endPos)
   return (
@@ -279,11 +279,19 @@ const endPoint = {
 const nodeRoleOptions = [
   {
     rGuid: "001",
-    rName: "001-001"
+    rName: "001"
   },
   {
     rGuid: "002",
-    rName: "001-002"
+    rName: "002"
+  },
+  {
+    rGuid: "003",
+    rName: "003"
+  },
+  {
+    rGuid: "004",
+    rName: "004"
   }
 ]
 
@@ -291,7 +299,7 @@ let workFlowValue = {}
  
 let getWorkFlowChartValue = (newWorkFlowValue) => {
     workFlowValue = newWorkFlowValue
-    console.log("work-flow 的JSON数据： ", JSON.stringify(workFlowValue))
+    // console.log("work-flow 的JSON数据： ", JSON.stringify(workFlowValue))
 }
 
 const DragAndDropSidebar = () => (

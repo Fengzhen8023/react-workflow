@@ -57,7 +57,8 @@ var FlowChartWithState = /** @class */ (function (_super) {
                 showModelName: "newNodeModel",
                 clickNodeId: nodeId,
                 nodeName: clickNodeProperties.name,
-                nodeId: clickNodeProperties.Id
+                nodeId: clickNodeProperties.Id,
+                nodeRoleOption: !!clickNodeProperties.nodeRole ? clickNodeProperties.nodeRole : ""
             });
         };
         _this.onLabelDoubleClick = function (_a) {
@@ -111,6 +112,10 @@ var FlowChartWithState = /** @class */ (function (_super) {
             });
         };
         _this.setNodeInfo = function () {
+            if (_this.state.nodeName === "") {
+                _this.warningMessage("Please input the node name!");
+                return false;
+            }
             var _nodes = _this.state.nodes;
             var _nodeId = _this.state.modelOption === "addNode" ? _this.state.newNodeId : _this.state.clickNodeId;
             _nodes[_nodeId].properties = {
@@ -122,6 +127,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
                 nodes: _nodes,
                 isModelShow: false
             });
+            return true;
         };
         _this.setLinkInfo = function () {
             var _links = _this.state.links;
@@ -164,7 +170,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
                             React.createElement(antd_1.Input, { onChange: _this.handleDescriptionInput, value: _this.state.nodeId, type: "text" })),
                         React.createElement(InputBox, null,
                             React.createElement("label", null, "Role:"),
-                            React.createElement(antd_1.Select, { defaultValue: nodeRoleOptions[0].rGuid, onChange: _this.handleNodeRoleChange }, nodeRoleOptions.map(function (role) { return (React.createElement(Option, { key: role.rGuid, value: !!role ? role.rGuid : "" }, !!role ? role.rName : "")); })))),
+                            React.createElement(antd_1.Select, { value: !!_this.state.nodeRoleOption ? _this.state.nodeRoleOption : nodeRoleOptions[0].rGuid, onChange: _this.handleNodeRoleChange }, nodeRoleOptions.map(function (role) { return (React.createElement(Option, { key: role.rGuid, value: !!role ? role.rGuid : "" }, !!role ? role.rName : "")); })))),
                     React.createElement(ButtonBox, null,
                         React.createElement(antd_1.Button, { type: "primary", onClick: _this.setNodeInfo }, "Confirm")))));
         };
@@ -182,6 +188,9 @@ var FlowChartWithState = /** @class */ (function (_super) {
                             React.createElement(antd_1.Input, { onChange: _this.handleLinkDescriptionInput, value: _this.state.linkLabel, type: "text" }))),
                     React.createElement(ButtonBox, null,
                         React.createElement(antd_1.Button, { type: "primary", onClick: _this.setLinkInfo }, "Confirm")))));
+        };
+        _this.warningMessage = function (content) {
+            antd_1.message.warning(content);
         };
         _this.state = __assign(__assign({}, props.initialValue), { preNodes: Object.keys(props.initialValue.nodes), preLinks: Object.keys(props.initialValue.links), isModelShow: false, showModelName: "", nodeName: "", nodeId: "", nodeRoleOption: "", linkLabel: "", newNodeId: "", clickNodeId: "", newLinkId: "", clickLinkId: "", modelOption: "addNode" });
         return _this;

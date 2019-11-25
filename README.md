@@ -1,9 +1,13 @@
-#### [中文文档](<https://github.com/Fengzhen8023/react-workflow/blob/master/README-ZH-CN.md>)    [English document](<https://github.com/Fengzhen8023/react-workflow/blob/master/README.md>)
+#### [中文文档](<https://github.com/Fengzhen8023/react-workflow/blob/master/README-ZH-CN.md>)              
+
+#### [English document](<https://github.com/Fengzhen8023/react-workflow/blob/master/README.md>)
 
 ## Install
 
+Please install the 1.0.5 version at that time.
+
 ```shell
-npm i react-work-flow
+npm i react-work-flow@1.0.5
 ```
 
 ## About the react-work-flow 

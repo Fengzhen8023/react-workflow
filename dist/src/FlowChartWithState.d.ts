@@ -22,11 +22,12 @@ export declare class FlowChartWithState extends React.Component<IFlowChartWithSt
     handleNameInput: (e: any) => void;
     handleDescriptionInput: (e: any) => void;
     handleLinkDescriptionInput: (e: any) => void;
-    setNodeInfo: () => void;
+    setNodeInfo: () => boolean;
     setLinkInfo: () => void;
     handleNodeRoleChange: (value: string) => void;
     renderAddNewNodeModel: () => JSX.Element;
     renderAddNewLinkModel: () => false | JSX.Element;
+    warningMessage: (content: string) => void;
     componentDidUpdate(): void;
     render(): JSX.Element;
 }

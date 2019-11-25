@@ -9,7 +9,7 @@ import {
   onNodeSizeChange, onPortPositionChange, onCanvasDrop 
 } from './container/actions'
 import 'antd/dist/antd.css'
-import { Select, Input, Icon, Button } from 'antd'
+import { Select, Input, Icon, Button, message } from 'antd'
 
 const ModelBox = styled.div`
   width: 100%;
@@ -122,14 +122,15 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
   onNodeDoubleClick: IOnNodeDoubleClick = ({ nodeId }) => {
     let clickNodeProperties = this.state.nodes[nodeId].properties
     clickNodeProperties = !!clickNodeProperties ? clickNodeProperties : {}
-
+    
     this.setState({
       isModelShow: true,
       modelOption: "editNode",
       showModelName: "newNodeModel",
       clickNodeId: nodeId,
       nodeName: clickNodeProperties.name,
-      nodeId: clickNodeProperties.Id
+      nodeId: clickNodeProperties.Id,
+      nodeRoleOption: !!clickNodeProperties.nodeRole ? clickNodeProperties.nodeRole : ""
     })
   }
 
@@ -182,7 +183,11 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     });
   }
 
-  setNodeInfo = () => {
+  setNodeInfo = (): boolean => {
+    if (this.state.nodeName === "") {
+      this.warningMessage("Please input the node name!")
+      return false
+    }
     let _nodes = this.state.nodes;
     let _nodeId = this.state.modelOption === "addNode" ? this.state.newNodeId : this.state.clickNodeId
     _nodes[_nodeId].properties = {
@@ -194,6 +199,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
       nodes: _nodes,
       isModelShow: false
     });
+    return true
   }
 
   setLinkInfo = () => {
@@ -243,7 +249,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
             </InputBox>
             <InputBox>
                 <label>Role:</label>
-                <Select defaultValue={nodeRoleOptions[0].rGuid} onChange={this.handleNodeRoleChange}>
+                <Select value={!!this.state.nodeRoleOption ? this.state.nodeRoleOption : nodeRoleOptions[0].rGuid} onChange={this.handleNodeRoleChange}>
                   {
                     nodeRoleOptions.map(role => (<Option key={role.rGuid} value={!!role ? role.rGuid : ""}>{!!role ? role.rName : ""}</Option>))
                   }
@@ -280,6 +286,10 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
         </ModelContent>
       </ModelBox>
     )
+  }
+
+  warningMessage = (content: string): void => {
+    message.warning(content);
   }
 
   componentDidUpdate() {
