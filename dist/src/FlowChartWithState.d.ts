@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IChart, IConfig, IFlowChartComponents, IOnNodeDoubleClick, IOnLabelDoubleClick } from './';
-import 'antd/dist/antd.css';
 export interface IFlowChartWithStateProps {
     initialValue: IChart;
     Components?: IFlowChartComponents;
@@ -28,6 +27,7 @@ export declare class FlowChartWithState extends React.Component<IFlowChartWithSt
     renderAddNewNodeModel: () => JSX.Element;
     renderAddNewLinkModel: () => false | JSX.Element;
     warningMessage: (content: string) => void;
+    renderAlertMessage: () => JSX.Element;
     componentDidUpdate(): void;
     render(): JSX.Element;
 }

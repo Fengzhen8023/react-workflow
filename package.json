@@ -41,15 +41,16 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.12.2",
     "css-loader": "^3.2.0",
+    "file-loader": "^5.0.2",
     "html-webpack-plugin": "^3.2.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "resize-observer-polyfill": "^1.5.1",
     "style-loader": "^1.0.0",
     "typescript": "^3.6.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "webpack-dev-server": "^3.8.2"
   },
   "dependencies": {
     "@emotion/core": "^10.0.21",
@@ -59,7 +60,6 @@
     "@types/lodash": "^4.14.147",
     "@types/styled-components": "^4.4.0",
     "@types/uuid": "^3.4.6",
-    "antd": "^3.25.2",
     "closest": "^0.0.1",
     "dagre": "^0.8.4",
     "lodash": "^4.17.15",

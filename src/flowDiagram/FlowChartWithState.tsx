@@ -8,8 +8,7 @@ import {
   onCanvasClick, onDeleteKey, onNodeClick,
   onNodeSizeChange, onPortPositionChange, onCanvasDrop 
 } from './container/actions'
-import 'antd/dist/antd.css'
-import { Select, Input, Icon, Button, message } from 'antd'
+import { Input, Button, Select, Message } from './element'
 
 const ModelBox = styled.div`
   width: 100%;
@@ -29,37 +28,19 @@ const ModelContent = styled.div`
   background: #fff;
   margin: 10% auto;
   border-radius: 10px;
-  overflow: hidden;
+  padding: 0.5rem;
 `
 
 const ButtonBox =styled.div`
   width: 100px;
-  height: 30px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding-right: 1rem;
   text-align: center;
-  float: right;
   margin-right: 40px;
   margin-bottom: 20px;
   cursor: pointer;
-`
-
-const HideModel = styled.div`
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-  text-align: center;
-  line-height: 20px;
-  float: right;
-  color: white;
-  position: absolute;
-  right: 10px;
-  top: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-
-  & i {
-    color: #40a9ff;
-    font-size: 20px;
-  }
 `
 
 const InputBox = styled.div`
@@ -68,19 +49,16 @@ const InputBox = styled.div`
   align-items: center;
   justify-content: center;
   margin: 20px 0;
+  padding: 0 1rem;
   
   & label {
     width: 20%;
   }
 
   & input {
-    width: 50%;
+    width: 100%;
     height: 30px;
     padding-left: 0.5rem;
-  }
-
-  & .ant-select {
-    width: 50%;
   }
 `
 
@@ -92,6 +70,9 @@ export interface IFlowChartWithStateProps {
   isAllowAddLinkLabel?: boolean
   nodeRoleOptions: any[]
 }
+
+let timer:any = null;
+
 
 /**
  * Flow Chart With State
@@ -113,7 +94,9 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
       clickNodeId: "",
       newLinkId: "",
       clickLinkId: "",
-      modelOption: "addNode"
+      modelOption: "addNode",
+      alertMessageInfo: "",
+      alertMessageStatus: "init"
     }
   }
 
@@ -184,8 +167,13 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
   }
 
   setNodeInfo = (): boolean => {
-    if (this.state.nodeName === "") {
+    // console.log("nodeName: ", this.state.nodeName)
+    if (this.state.nodeName.trim() === "") {
       this.warningMessage("Please input the node name!")
+      return false
+    }
+    if (this.state.nodeId.trim() === "") {
+      this.warningMessage("Please input the node Id!")
       return false
     }
     let _nodes = this.state.nodes;
@@ -231,13 +219,9 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
   renderAddNewNodeModel = () => {
     const { nodeRoleOptions = [] } = this.props
     // console.log("nodeRoleOptions: ", nodeRoleOptions)
-    const { Option } = Select;
     return (
       <ModelBox className={this.state.isModelShow ? "" : "hide"}>
         <ModelContent>
-          <HideModel onClick={this.hideModel}>
-            <Icon type="close-circle" />
-          </HideModel>
           <div className="InputBox">
             <InputBox>
               <label>Name:</label>
@@ -249,15 +233,16 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
             </InputBox>
             <InputBox>
                 <label>Role:</label>
-                <Select value={!!this.state.nodeRoleOption ? this.state.nodeRoleOption : nodeRoleOptions[0].rGuid} onChange={this.handleNodeRoleChange}>
-                  {
-                    nodeRoleOptions.map(role => (<Option key={role.rGuid} value={!!role ? role.rGuid : ""}>{!!role ? role.rName : ""}</Option>))
-                  }
+                <Select 
+                  optionList={ nodeRoleOptions }
+                  value={!!this.state.nodeRoleOption ? this.state.nodeRoleOption : nodeRoleOptions[0].rGuid}
+                  onChange={this.handleNodeRoleChange} >
                 </Select>
             </InputBox>
           </div>
           <ButtonBox>
-            <Button type="primary" onClick={this.setNodeInfo}>Confirm</Button>
+            <Button onClick={this.setNodeInfo} type="primary">Confirm</Button>
+            <Button onClick={this.hideModel} type="cancel">Cancel</Button>
           </ButtonBox>
         </ModelContent>
       </ModelBox>
@@ -271,9 +256,6 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     return (
       <ModelBox className={this.state.isModelShow ? "" : "hide"}>
         <ModelContent>
-          <HideModel onClick={this.hideModel}>
-            <Icon type="close-circle" />
-          </HideModel>
           <div className="InputBox">
             <InputBox>
               <label>Name:</label>
@@ -281,7 +263,8 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
             </InputBox>
           </div>
           <ButtonBox>
-            <Button type="primary" onClick={this.setLinkInfo}>Confirm</Button>
+            <Button onClick={this.hideModel}>Cancel</Button>
+            <Button onClick={this.setLinkInfo}>Confirm</Button>
           </ButtonBox>
         </ModelContent>
       </ModelBox>
@@ -289,7 +272,23 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
   }
 
   warningMessage = (content: string): void => {
-    message.warning(content);
+    this.setState((preState) => ({
+      alertMessageInfo: content,
+      alertMessageStatus: "show",
+    }))
+
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      this.setState({
+        alertMessageStatus: "hide"
+      })
+    }, 2000);
+  }
+
+  renderAlertMessage = () => {
+    return (
+      <Message errorInfo={this.state.alertMessageInfo} alertMessageStatus={this.state.alertMessageStatus} />
+    )
   }
 
   componentDidUpdate() {
@@ -365,6 +364,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
       <React.Fragment>
         { this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : ""}
         { this.state.showModelName === "newLinkModel" ? this.renderAddNewLinkModel() : ""}
+        { this.renderAlertMessage() }
         <FlowChart
           chart={this.state}
           callbacks={this.stateActions}

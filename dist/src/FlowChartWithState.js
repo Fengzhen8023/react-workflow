@@ -33,13 +33,12 @@ var styled_components_1 = require("styled-components");
 var mapValues_1 = require("./container/utils/mapValues");
 var _1 = require("./");
 var actions_1 = require("./container/actions");
-require("antd/dist/antd.css");
-var antd_1 = require("antd");
+var element_1 = require("./element");
 var ModelBox = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  background: rgba(0,0,0,0.8);\n  z-index: 99;\n\n  &.hide {\n    display: none;\n  }\n"], ["\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  background: rgba(0,0,0,0.8);\n  z-index: 99;\n\n  &.hide {\n    display: none;\n  }\n"])));
-var ModelContent = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: relative;\n  width: 50%;\n  background: #fff;\n  margin: 10% auto;\n  border-radius: 10px;\n  overflow: hidden;\n"], ["\n  position: relative;\n  width: 50%;\n  background: #fff;\n  margin: 10% auto;\n  border-radius: 10px;\n  overflow: hidden;\n"])));
-var ButtonBox = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  width: 100px;\n  height: 30px;\n  text-align: center;\n  float: right;\n  margin-right: 40px;\n  margin-bottom: 20px;\n  cursor: pointer;\n"], ["\n  width: 100px;\n  height: 30px;\n  text-align: center;\n  float: right;\n  margin-right: 40px;\n  margin-bottom: 20px;\n  cursor: pointer;\n"])));
-var HideModel = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  display: inline-block;\n  height: 20px;\n  width: 20px;\n  text-align: center;\n  line-height: 20px;\n  float: right;\n  color: white;\n  position: absolute;\n  right: 10px;\n  top: 5px;\n  border-radius: 5px;\n  cursor: pointer;\n\n  & i {\n    color: #40a9ff;\n    font-size: 20px;\n  }\n"], ["\n  display: inline-block;\n  height: 20px;\n  width: 20px;\n  text-align: center;\n  line-height: 20px;\n  float: right;\n  color: white;\n  position: absolute;\n  right: 10px;\n  top: 5px;\n  border-radius: 5px;\n  cursor: pointer;\n\n  & i {\n    color: #40a9ff;\n    font-size: 20px;\n  }\n"])));
-var InputBox = styled_components_1.default.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  font-size: 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 20px 0;\n  \n  & label {\n    width: 20%;\n  }\n\n  & input {\n    width: 50%;\n    height: 30px;\n    padding-left: 0.5rem;\n  }\n\n  & .ant-select {\n    width: 50%;\n  }\n"], ["\n  font-size: 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 20px 0;\n  \n  & label {\n    width: 20%;\n  }\n\n  & input {\n    width: 50%;\n    height: 30px;\n    padding-left: 0.5rem;\n  }\n\n  & .ant-select {\n    width: 50%;\n  }\n"])));
+var ModelContent = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: relative;\n  width: 50%;\n  background: #fff;\n  margin: 10% auto;\n  border-radius: 10px;\n  padding: 0.5rem;\n"], ["\n  position: relative;\n  width: 50%;\n  background: #fff;\n  margin: 10% auto;\n  border-radius: 10px;\n  padding: 0.5rem;\n"])));
+var ButtonBox = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  width: 100px;\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  padding-right: 1rem;\n  text-align: center;\n  margin-right: 40px;\n  margin-bottom: 20px;\n  cursor: pointer;\n"], ["\n  width: 100px;\n  display: flex;\n  justify-content: flex-end;\n  width: 100%;\n  padding-right: 1rem;\n  text-align: center;\n  margin-right: 40px;\n  margin-bottom: 20px;\n  cursor: pointer;\n"])));
+var InputBox = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  font-size: 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 20px 0;\n  padding: 0 1rem;\n  \n  & label {\n    width: 20%;\n  }\n\n  & input {\n    width: 100%;\n    height: 30px;\n    padding-left: 0.5rem;\n  }\n"], ["\n  font-size: 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 20px 0;\n  padding: 0 1rem;\n  \n  & label {\n    width: 20%;\n  }\n\n  & input {\n    width: 100%;\n    height: 30px;\n    padding-left: 0.5rem;\n  }\n"])));
+var timer = null;
 /**
  * Flow Chart With State
  */
@@ -112,8 +111,13 @@ var FlowChartWithState = /** @class */ (function (_super) {
             });
         };
         _this.setNodeInfo = function () {
-            if (_this.state.nodeName === "") {
+            // console.log("nodeName: ", this.state.nodeName)
+            if (_this.state.nodeName.trim() === "") {
                 _this.warningMessage("Please input the node name!");
+                return false;
+            }
+            if (_this.state.nodeId.trim() === "") {
+                _this.warningMessage("Please input the node Id!");
                 return false;
             }
             var _nodes = _this.state.nodes;
@@ -156,23 +160,21 @@ var FlowChartWithState = /** @class */ (function (_super) {
         _this.renderAddNewNodeModel = function () {
             var _a = _this.props.nodeRoleOptions, nodeRoleOptions = _a === void 0 ? [] : _a;
             // console.log("nodeRoleOptions: ", nodeRoleOptions)
-            var Option = antd_1.Select.Option;
             return (React.createElement(ModelBox, { className: _this.state.isModelShow ? "" : "hide" },
                 React.createElement(ModelContent, null,
-                    React.createElement(HideModel, { onClick: _this.hideModel },
-                        React.createElement(antd_1.Icon, { type: "close-circle" })),
                     React.createElement("div", { className: "InputBox" },
                         React.createElement(InputBox, null,
                             React.createElement("label", null, "Name:"),
-                            React.createElement(antd_1.Input, { onChange: _this.handleNameInput, value: _this.state.nodeName, type: "text" })),
+                            React.createElement(element_1.Input, { onChange: _this.handleNameInput, value: _this.state.nodeName, type: "text" })),
                         React.createElement(InputBox, null,
                             React.createElement("label", null, "Id:"),
-                            React.createElement(antd_1.Input, { onChange: _this.handleDescriptionInput, value: _this.state.nodeId, type: "text" })),
+                            React.createElement(element_1.Input, { onChange: _this.handleDescriptionInput, value: _this.state.nodeId, type: "text" })),
                         React.createElement(InputBox, null,
                             React.createElement("label", null, "Role:"),
-                            React.createElement(antd_1.Select, { value: !!_this.state.nodeRoleOption ? _this.state.nodeRoleOption : nodeRoleOptions[0].rGuid, onChange: _this.handleNodeRoleChange }, nodeRoleOptions.map(function (role) { return (React.createElement(Option, { key: role.rGuid, value: !!role ? role.rGuid : "" }, !!role ? role.rName : "")); })))),
+                            React.createElement(element_1.Select, { optionList: nodeRoleOptions, value: !!_this.state.nodeRoleOption ? _this.state.nodeRoleOption : nodeRoleOptions[0].rGuid, onChange: _this.handleNodeRoleChange }))),
                     React.createElement(ButtonBox, null,
-                        React.createElement(antd_1.Button, { type: "primary", onClick: _this.setNodeInfo }, "Confirm")))));
+                        React.createElement(element_1.Button, { onClick: _this.setNodeInfo, type: "primary" }, "Confirm"),
+                        React.createElement(element_1.Button, { onClick: _this.hideModel, type: "cancel" }, "Cancel")))));
         };
         _this.renderAddNewLinkModel = function () {
             if (_this.props.isAllowAddLinkLabel !== true) {
@@ -180,19 +182,30 @@ var FlowChartWithState = /** @class */ (function (_super) {
             }
             return (React.createElement(ModelBox, { className: _this.state.isModelShow ? "" : "hide" },
                 React.createElement(ModelContent, null,
-                    React.createElement(HideModel, { onClick: _this.hideModel },
-                        React.createElement(antd_1.Icon, { type: "close-circle" })),
                     React.createElement("div", { className: "InputBox" },
                         React.createElement(InputBox, null,
                             React.createElement("label", null, "Name:"),
-                            React.createElement(antd_1.Input, { onChange: _this.handleLinkDescriptionInput, value: _this.state.linkLabel, type: "text" }))),
+                            React.createElement(element_1.Input, { onChange: _this.handleLinkDescriptionInput, value: _this.state.linkLabel, type: "text" }))),
                     React.createElement(ButtonBox, null,
-                        React.createElement(antd_1.Button, { type: "primary", onClick: _this.setLinkInfo }, "Confirm")))));
+                        React.createElement(element_1.Button, { onClick: _this.hideModel }, "Cancel"),
+                        React.createElement(element_1.Button, { onClick: _this.setLinkInfo }, "Confirm")))));
         };
         _this.warningMessage = function (content) {
-            antd_1.message.warning(content);
+            _this.setState(function (preState) { return ({
+                alertMessageInfo: content,
+                alertMessageStatus: "show",
+            }); });
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                _this.setState({
+                    alertMessageStatus: "hide"
+                });
+            }, 2000);
         };
-        _this.state = __assign(__assign({}, props.initialValue), { preNodes: Object.keys(props.initialValue.nodes), preLinks: Object.keys(props.initialValue.links), isModelShow: false, showModelName: "", nodeName: "", nodeId: "", nodeRoleOption: "", linkLabel: "", newNodeId: "", clickNodeId: "", newLinkId: "", clickLinkId: "", modelOption: "addNode" });
+        _this.renderAlertMessage = function () {
+            return (React.createElement(element_1.Message, { errorInfo: _this.state.alertMessageInfo, alertMessageStatus: _this.state.alertMessageStatus }));
+        };
+        _this.state = __assign(__assign({}, props.initialValue), { preNodes: Object.keys(props.initialValue.nodes), preLinks: Object.keys(props.initialValue.links), isModelShow: false, showModelName: "", nodeName: "", nodeId: "", nodeRoleOption: "", linkLabel: "", newNodeId: "", clickNodeId: "", newLinkId: "", clickLinkId: "", modelOption: "addNode", alertMessageInfo: "", alertMessageStatus: "init" });
         return _this;
     }
     FlowChartWithState.prototype.componentDidUpdate = function () {
@@ -259,10 +272,11 @@ var FlowChartWithState = /** @class */ (function (_super) {
         return (React.createElement(React.Fragment, null,
             this.state.showModelName === "newNodeModel" ? this.renderAddNewNodeModel() : "",
             this.state.showModelName === "newLinkModel" ? this.renderAddNewLinkModel() : "",
+            this.renderAlertMessage(),
             React.createElement(_1.FlowChart, { chart: this.state, callbacks: this.stateActions, Components: Components, config: config, isAllowAddLinkLabel: !!this.props.isAllowAddLinkLabel })));
     };
     return FlowChartWithState;
 }(React.Component));
 exports.FlowChartWithState = FlowChartWithState;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
 //# sourceMappingURL=FlowChartWithState.js.map

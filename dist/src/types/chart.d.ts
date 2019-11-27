@@ -21,6 +21,8 @@ export interface IChart {
     newLinkId: string;
     clickNodeId: string;
     modelOption: string;
+    alertMessageInfo: string;
+    alertMessageStatus: string;
     clickLinkId: string;
     preNodes: any;
     preLinks: any;
