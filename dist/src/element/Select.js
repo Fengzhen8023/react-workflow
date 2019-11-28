@@ -4,6 +4,7 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
     return cooked;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var React = require("react");
 var react_1 = require("react");
 var styled_components_1 = require("styled-components");
 var Icons_1 = require("./Icons");
@@ -20,10 +21,13 @@ exports.Select = function (_a) {
     var _d = react_1.useState(false), isBodyShow = _d[0], setIsBodyShow = _d[1];
     var _e = react_1.useState(true), isBgShow = _e[0], setIsBgShow = _e[1];
     var _f = react_1.useState(value), selectValue = _f[0], setSelectValue = _f[1];
-    var handleClickOption = function (optionKey) {
-        setSelectValue(optionKey);
+    react_1.useEffect(function () {
+        setSelectValue(value);
+    }, [value]);
+    var handleClickOption = function (optionValue) {
+        setSelectValue(optionValue);
         hideSelectBody();
-        onChange(optionKey);
+        onChange(optionValue);
     };
     var hideSelectBody = function () {
         setIsBodyShow(!isBodyShow);
@@ -37,13 +41,13 @@ exports.Select = function (_a) {
         setIsBodyShow(true);
         setIsBgShow(true);
     };
-    return (react_1.default.createElement(SelectBox, null,
-        isBgShow ? react_1.default.createElement(SelectBackground, { onClick: function () { hideSelectBody(); } }) : "",
-        react_1.default.createElement(SelectHeader, { onClick: function () { showSelectBody(); } },
-            react_1.default.createElement(SelectValue, null, selectValue),
-            react_1.default.createElement(ArrowBox, { className: isArrowUp ? "up-arrow" : "down-arrow" },
-                react_1.default.createElement(Icons_1.ArrowIcon, { width: 20, height: 20 }))),
-        react_1.default.createElement(SelectBody, { className: isBodyShow ? "" : "hide-body" }, optionList.map(function (option) { return react_1.default.createElement(SelectOption, { key: option.rGuid, onClick: function () { handleClickOption(option.rGuid); } }, option.rName); }))));
+    return (React.createElement(SelectBox, null,
+        isBgShow ? React.createElement(SelectBackground, { onClick: function () { hideSelectBody(); } }) : "",
+        React.createElement(SelectHeader, { onClick: function () { showSelectBody(); } },
+            React.createElement(SelectValue, null, selectValue),
+            React.createElement(ArrowBox, { className: isArrowUp ? "up-arrow" : "down-arrow" },
+                React.createElement(Icons_1.ArrowIcon, { width: 20, height: 20 }))),
+        React.createElement(SelectBody, { className: isBodyShow ? "" : "hide-body" }, optionList.map(function (option) { return React.createElement(SelectOption, { key: option.rGuid, onClick: function () { handleClickOption(option.rName); } }, option.rName); }))));
 };
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7;
 //# sourceMappingURL=Select.js.map

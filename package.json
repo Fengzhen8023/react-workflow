@@ -24,7 +24,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
-    "export": "rm -rf dist && tsc",
+    "export": "rm -rf dist && tsc && cp ./src/flowDiagram/element/animate.css ./dist/src/element/",
     "dev": "webpack-dev-server --config webpack.config.js --mode development --open"
   },
   "devDependencies": {

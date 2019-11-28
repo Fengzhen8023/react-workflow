@@ -107,13 +107,16 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     clickNodeProperties = !!clickNodeProperties ? clickNodeProperties : {}
     
     this.setState({
-      isModelShow: true,
       modelOption: "editNode",
       showModelName: "newNodeModel",
       clickNodeId: nodeId,
       nodeName: clickNodeProperties.name,
       nodeId: clickNodeProperties.Id,
       nodeRoleOption: !!clickNodeProperties.nodeRole ? clickNodeProperties.nodeRole : ""
+    }, () => {
+      this.setState({
+        isModelShow: true
+      })
     })
   }
 
@@ -235,7 +238,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
                 <label>Role:</label>
                 <Select 
                   optionList={ nodeRoleOptions }
-                  value={!!this.state.nodeRoleOption ? this.state.nodeRoleOption : nodeRoleOptions[0].rGuid}
+                  value={!!this.state.nodeRoleOption ? this.state.nodeRoleOption : nodeRoleOptions[0].rName}
                   onChange={this.handleNodeRoleChange} >
                 </Select>
             </InputBox>

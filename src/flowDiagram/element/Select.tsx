@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { ArrowIcon } from './Icons'
 
@@ -124,10 +125,14 @@ export const Select = ({ optionList = [], value, onChange }: ISelectProps) => {
   const [ isBgShow, setIsBgShow ] = useState(true)
   const [ selectValue, setSelectValue ] = useState(value)
 
-  const handleClickOption = (optionKey: string) => {
-    setSelectValue(optionKey)
+  useEffect(() => {
+    setSelectValue(value)
+  }, [ value ])
+
+  const handleClickOption = (optionValue: string) => {
+    setSelectValue(optionValue)
     hideSelectBody()
-    onChange(optionKey)
+    onChange(optionValue)
   }
 
   const hideSelectBody = () => {
@@ -155,7 +160,7 @@ export const Select = ({ optionList = [], value, onChange }: ISelectProps) => {
       </SelectHeader>
       <SelectBody className={ isBodyShow ? "" : "hide-body" }>
         {
-          optionList.map(option => <SelectOption key={option.rGuid} onClick={ () => { handleClickOption(option.rGuid) } }>{option.rName}</SelectOption>)
+          optionList.map(option => <SelectOption key={option.rGuid} onClick={ () => { handleClickOption(option.rName) } }>{option.rName}</SelectOption>)
         }
       </SelectBody>
     </SelectBox>

@@ -51,13 +51,16 @@ var FlowChartWithState = /** @class */ (function (_super) {
             var clickNodeProperties = _this.state.nodes[nodeId].properties;
             clickNodeProperties = !!clickNodeProperties ? clickNodeProperties : {};
             _this.setState({
-                isModelShow: true,
                 modelOption: "editNode",
                 showModelName: "newNodeModel",
                 clickNodeId: nodeId,
                 nodeName: clickNodeProperties.name,
                 nodeId: clickNodeProperties.Id,
                 nodeRoleOption: !!clickNodeProperties.nodeRole ? clickNodeProperties.nodeRole : ""
+            }, function () {
+                _this.setState({
+                    isModelShow: true
+                });
             });
         };
         _this.onLabelDoubleClick = function (_a) {
@@ -171,7 +174,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
                             React.createElement(element_1.Input, { onChange: _this.handleDescriptionInput, value: _this.state.nodeId, type: "text" })),
                         React.createElement(InputBox, null,
                             React.createElement("label", null, "Role:"),
-                            React.createElement(element_1.Select, { optionList: nodeRoleOptions, value: !!_this.state.nodeRoleOption ? _this.state.nodeRoleOption : nodeRoleOptions[0].rGuid, onChange: _this.handleNodeRoleChange }))),
+                            React.createElement(element_1.Select, { optionList: nodeRoleOptions, value: !!_this.state.nodeRoleOption ? _this.state.nodeRoleOption : nodeRoleOptions[0].rName, onChange: _this.handleNodeRoleChange }))),
                     React.createElement(ButtonBox, null,
                         React.createElement(element_1.Button, { onClick: _this.setNodeInfo, type: "primary" }, "Confirm"),
                         React.createElement(element_1.Button, { onClick: _this.hideModel, type: "cancel" }, "Cancel")))));
