@@ -151,6 +151,34 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     });
   }
 
+  handleCancelEditNode = () => {
+    if (this.state.modelOption === "addNode") {
+      let _newNodeId = this.state.newNodeId
+      let _nodes = {}
+      let _preNodes = []
+
+      Object.keys(this.state.nodes).forEach(nodeId => {
+        if (nodeId !== _newNodeId) {
+          _nodes[nodeId] = this.state.nodes[nodeId]
+        }
+      })
+
+      this.state.preNodes.forEach(preNodeId => {
+        if (preNodeId !== _newNodeId) {
+          _preNodes.push(preNodeId);
+        }
+      })
+
+      this.setState({
+        newNodeId: "",
+        nodes: _nodes,
+        preNodes: _preNodes
+      });
+    }
+
+    this.hideModel()
+  }
+
   handleNameInput = (e: any) => {
     this.setState({
       nodeName: e.currentTarget.value
@@ -173,10 +201,6 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     // console.log("nodeName: ", this.state.nodeName)
     if (this.state.nodeName.trim() === "") {
       this.warningMessage("Please input the node name!")
-      return false
-    }
-    if (this.state.nodeId.trim() === "") {
-      this.warningMessage("Please input the node Id!")
       return false
     }
     let _nodes = this.state.nodes;
@@ -245,7 +269,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
           </div>
           <ButtonBox>
             <Button onClick={this.setNodeInfo} type="primary">Confirm</Button>
-            <Button onClick={this.hideModel} type="cancel">Cancel</Button>
+            <Button onClick={this.handleCancelEditNode} type="cancel">Cancel</Button>
           </ButtonBox>
         </ModelContent>
       </ModelBox>
@@ -266,8 +290,8 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
             </InputBox>
           </div>
           <ButtonBox>
-            <Button onClick={this.hideModel}>Cancel</Button>
-            <Button onClick={this.setLinkInfo}>Confirm</Button>
+            <Button onClick={this.setLinkInfo} type="primary">Confirm</Button>
+            <Button onClick={this.hideModel} type="cancel">Cancel</Button>
           </ButtonBox>
         </ModelContent>
       </ModelBox>
