@@ -98,6 +98,29 @@ var FlowChartWithState = /** @class */ (function (_super) {
                 linkLabel: ""
             });
         };
+        _this.handleCancelEditNode = function () {
+            if (_this.state.modelOption === "addNode") {
+                var _newNodeId_1 = _this.state.newNodeId;
+                var _nodes_1 = {};
+                var _preNodes_1 = [];
+                Object.keys(_this.state.nodes).forEach(function (nodeId) {
+                    if (nodeId !== _newNodeId_1) {
+                        _nodes_1[nodeId] = _this.state.nodes[nodeId];
+                    }
+                });
+                _this.state.preNodes.forEach(function (preNodeId) {
+                    if (preNodeId !== _newNodeId_1) {
+                        _preNodes_1.push(preNodeId);
+                    }
+                });
+                _this.setState({
+                    newNodeId: "",
+                    nodes: _nodes_1,
+                    preNodes: _preNodes_1
+                });
+            }
+            _this.hideModel();
+        };
         _this.handleNameInput = function (e) {
             _this.setState({
                 nodeName: e.currentTarget.value
@@ -117,10 +140,6 @@ var FlowChartWithState = /** @class */ (function (_super) {
             // console.log("nodeName: ", this.state.nodeName)
             if (_this.state.nodeName.trim() === "") {
                 _this.warningMessage("Please input the node name!");
-                return false;
-            }
-            if (_this.state.nodeId.trim() === "") {
-                _this.warningMessage("Please input the node Id!");
                 return false;
             }
             var _nodes = _this.state.nodes;
@@ -177,7 +196,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
                             React.createElement(element_1.Select, { optionList: nodeRoleOptions, value: !!_this.state.nodeRoleOption ? _this.state.nodeRoleOption : nodeRoleOptions[0].rName, onChange: _this.handleNodeRoleChange }))),
                     React.createElement(ButtonBox, null,
                         React.createElement(element_1.Button, { onClick: _this.setNodeInfo, type: "primary" }, "Confirm"),
-                        React.createElement(element_1.Button, { onClick: _this.hideModel, type: "cancel" }, "Cancel")))));
+                        React.createElement(element_1.Button, { onClick: _this.handleCancelEditNode, type: "cancel" }, "Cancel")))));
         };
         _this.renderAddNewLinkModel = function () {
             if (_this.props.isAllowAddLinkLabel !== true) {
@@ -190,8 +209,8 @@ var FlowChartWithState = /** @class */ (function (_super) {
                             React.createElement("label", null, "Name:"),
                             React.createElement(element_1.Input, { onChange: _this.handleLinkDescriptionInput, value: _this.state.linkLabel, type: "text" }))),
                     React.createElement(ButtonBox, null,
-                        React.createElement(element_1.Button, { onClick: _this.hideModel }, "Cancel"),
-                        React.createElement(element_1.Button, { onClick: _this.setLinkInfo }, "Confirm")))));
+                        React.createElement(element_1.Button, { onClick: _this.setLinkInfo, type: "primary" }, "Confirm"),
+                        React.createElement(element_1.Button, { onClick: _this.hideModel, type: "cancel" }, "Cancel")))));
         };
         _this.warningMessage = function (content) {
             _this.setState(function (preState) { return ({

@@ -155,7 +155,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     if (this.state.modelOption === "addNode") {
       let _newNodeId = this.state.newNodeId
       let _nodes = {}
-      let _preNodes = []
+      let _preNodes: any = []
 
       Object.keys(this.state.nodes).forEach(nodeId => {
         if (nodeId !== _newNodeId) {
@@ -163,7 +163,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
         }
       })
 
-      this.state.preNodes.forEach(preNodeId => {
+      this.state.preNodes.forEach((preNodeId: any) => {
         if (preNodeId !== _newNodeId) {
           _preNodes.push(preNodeId);
         }

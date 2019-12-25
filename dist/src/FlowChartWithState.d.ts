@@ -18,6 +18,7 @@ export declare class FlowChartWithState extends React.Component<IFlowChartWithSt
     onLabelDoubleClick: IOnLabelDoubleClick;
     private stateActions;
     hideModel: () => void;
+    handleCancelEditNode: () => void;
     handleNameInput: (e: any) => void;
     handleDescriptionInput: (e: any) => void;
     handleLinkDescriptionInput: (e: any) => void;
