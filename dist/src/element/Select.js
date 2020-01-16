@@ -22,10 +22,11 @@ exports.Select = function (_a) {
     var _e = react_1.useState(true), isBgShow = _e[0], setIsBgShow = _e[1];
     var _f = react_1.useState(value), selectValue = _f[0], setSelectValue = _f[1];
     react_1.useEffect(function () {
-        setSelectValue(value);
+        var selectRole = optionList.filter(function (role) { return role.rGuid === value; });
+        var selectRoleName = selectRole[0].rName;
+        setSelectValue(selectRoleName);
     }, [value]);
     var handleClickOption = function (optionValue) {
-        setSelectValue(optionValue);
         hideSelectBody();
         onChange(optionValue);
     };
