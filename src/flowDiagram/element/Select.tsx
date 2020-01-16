@@ -160,7 +160,7 @@ export const Select = ({ optionList = [], value, onChange }: ISelectProps) => {
       </SelectHeader>
       <SelectBody className={ isBodyShow ? "" : "hide-body" }>
         {
-          optionList.map(option => <SelectOption key={option.rGuid} onClick={ () => { handleClickOption(option.rName) } }>{option.rName}</SelectOption>)
+          optionList.map(option => <SelectOption key={option.rGuid} onClick={ () => { handleClickOption(option.rGuid) } }>{option.rName}</SelectOption>)
         }
       </SelectBody>
     </SelectBox>

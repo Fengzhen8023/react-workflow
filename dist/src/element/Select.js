@@ -47,7 +47,7 @@ exports.Select = function (_a) {
             React.createElement(SelectValue, null, selectValue),
             React.createElement(ArrowBox, { className: isArrowUp ? "up-arrow" : "down-arrow" },
                 React.createElement(Icons_1.ArrowIcon, { width: 20, height: 20 }))),
-        React.createElement(SelectBody, { className: isBodyShow ? "" : "hide-body" }, optionList.map(function (option) { return React.createElement(SelectOption, { key: option.rGuid, onClick: function () { handleClickOption(option.rName); } }, option.rName); }))));
+        React.createElement(SelectBody, { className: isBodyShow ? "" : "hide-body" }, optionList.map(function (option) { return React.createElement(SelectOption, { key: option.rGuid, onClick: function () { handleClickOption(option.rGuid); } }, option.rName); }))));
 };
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7;
 //# sourceMappingURL=Select.js.map

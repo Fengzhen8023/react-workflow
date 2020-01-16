@@ -278,19 +278,19 @@ const endPoint = {
 
 const nodeRoleOptions = [
   {
-    rGuid: "001",
+    rGuid: "001-guid",
     rName: "001"
   },
   {
-    rGuid: "002",
+    rGuid: "002-guid",
     rName: "002"
   },
   {
-    rGuid: "003",
+    rGuid: "003-guid",
     rName: "003"
   },
   {
-    rGuid: "004",
+    rGuid: "004-guid",
     rName: "004"
   }
 ]
