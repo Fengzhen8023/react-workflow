@@ -126,11 +126,12 @@ export const Select = ({ optionList = [], value, onChange }: ISelectProps) => {
   const [ selectValue, setSelectValue ] = useState(value)
 
   useEffect(() => {
-    setSelectValue(value)
+    let selectRole = optionList.filter(role => role.rGuid === value);
+    let selectRoleName = selectRole[0].rName;
+    setSelectValue(selectRoleName)
   }, [ value ])
 
   const handleClickOption = (optionValue: string) => {
-    setSelectValue(optionValue)
     hideSelectBody()
     onChange(optionValue)
   }

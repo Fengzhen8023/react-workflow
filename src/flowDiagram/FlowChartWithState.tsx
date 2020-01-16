@@ -262,7 +262,7 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
                 <label>Role:</label>
                 <Select 
                   optionList={ nodeRoleOptions }
-                  value={!!this.state.nodeRoleOption ? this.state.nodeRoleOption : nodeRoleOptions[0].rName}
+                  value={!!this.state.nodeRoleOption ? this.state.nodeRoleOption : nodeRoleOptions[0].rGuid}
                   onChange={this.handleNodeRoleChange} >
                 </Select>
             </InputBox>
